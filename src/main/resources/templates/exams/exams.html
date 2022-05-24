@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+    <a th:href="@{/exams/new}"> New Exam</a>
+</div>
+<div>
+    <h3>[[${message}]]</h3>
+</div>
+<div th:each="exam:${listExams}">
+    <h3 th:text="${exam.title}"></h3>
+    <a th:href="@{'/exams/download?id=' + ${exam.id}}">[[${exam.filename}]]</a>
+    <h5 th:text="${exam.description}"></h5>
+    <div sec:authorize="hasAnyAuthority('ADMIN')">
+        <a th:href="@{/exams/edit/{id}(id = ${exam.id})}">Edit</a>
+    </div>
+    <div sec:authorize="hasAnyAuthority('ADMIN')">
+        <a th:href="@{/exams/delete/{id}(id = ${exam.id})}">Delete</a>
+    </div>
+</div>
+</body>
+</html>

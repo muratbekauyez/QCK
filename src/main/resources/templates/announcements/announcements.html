@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Announcements</title>
+</head>
+<body>
+<h1>Announcements List</h1>
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+    <a th:href="@{/announcements/new}"> New Announcement</a>
+</div>
+<div th:each="announcement:${listAnnouncements}">
+    <h2 th:text ="${announcement.title}"></h2>
+    <h5 th:text ="${announcement.text}"></h5>
+    <div sec:authorize="hasAnyAuthority('ADMIN')">
+        <a th:href="@{/announcements/edit/{id}(id = ${announcement.id})}">Edit</a>
+    </div>
+    <div sec:authorize="hasAnyAuthority('ADMIN')">
+        <a th:href="@{/announcements/delete/{id}(id = ${announcement.id})}">Delete</a>
+    </div>
+</div>
+</body>
+</html>

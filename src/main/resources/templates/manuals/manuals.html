@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Manuals</title>
+</head>
+<body>
+<h1>Manuals List</h1>
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+    <a th:href="@{/manuals/new}"> New Manual</a>
+</div>
+<div th:each="manual:${listManuals}">
+    <h2 th:text ="${manual.title}"></h2>
+    <h5 th:text ="${manual.text}"></h5>
+    <div sec:authorize="hasAnyAuthority('ADMIN')">
+        <a th:href="@{/manuals/edit/{id}(id = ${manual.id})}">Edit</a>
+    </div>
+    <div sec:authorize="hasAnyAuthority('ADMIN')">
+        <a th:href="@{/manuals/delete/{id}(id = ${manual.id})}">Delete</a>
+    </div>
+</div>
+</body>
+</html>

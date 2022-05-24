@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Manual</title>
+</head>
+<body>
+<h1>Update Manual</h1>
+<form action="#" th:action="@{/manuals/updateManual}" th:object="${manual}" method="POST">
+    <input type="hidden" th:field="*{id}" value="*{id}">
+    <input type="text" th:field="*{title}" placeholder="Title"/> <br>
+    <textarea th:field="*{text}"></textarea> <br>
+    <button type="submit">Update Manual</button>
+</form>
+</body>
+</html>

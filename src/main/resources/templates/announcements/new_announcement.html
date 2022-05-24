@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Announcement</title>
+</head>
+<body>
+<div class="container">
+    <h1>Add New Announcement</h1>
+    <form action="#" th:action="@{/announcements/saveAnnouncement}" th:object = "${announcement}" method="post">
+        <input type = "text" th:field = "*{title}" placeholder="Title"/> <br>
+        <textarea th:field = "*{text}"></textarea> <br>
+        <button type="submit">Save Announcement</button>
+    </form>
+</div>
+
+</body>
+</html>

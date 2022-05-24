@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div sec:authorize="isAnonymous()">
+    <form action="/login" method="get">
+        <input type="submit" value="Login">
+    </form>
+    <br>
+</div>
+<div sec:authorize="isAuthenticated()">
+    Welcome <b><span sec:authentication="name">Username</span></b>
+    &nbsp;
+    <i><span sec:authentication="principal.authorities">Roles</span></i>
+
+
+
+    <form th:action ="@{/logout}" method="post">
+        <input type="submit" value="Logout">
+    </form>
+</div>
+<br>
+<a th:href="@{/announcements}">Announcements</a><br>
+<a th:href="@{/manuals}">Manuals</a> <br>
+<a th:href="@{/exams}">Exams</a>
+</body>
+</html>
