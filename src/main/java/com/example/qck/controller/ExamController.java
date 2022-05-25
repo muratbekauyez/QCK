@@ -1,5 +1,7 @@
-package com.example.qck.exam;
+package com.example.qck.controller;
 
+import com.example.qck.service.ExamService;
+import com.example.qck.model.Exam;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/exams")

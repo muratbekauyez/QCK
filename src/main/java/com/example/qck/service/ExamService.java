@@ -1,5 +1,7 @@
-package com.example.qck.exam;
+package com.example.qck.service;
 
+import com.example.qck.repository.ExamRepository;
+import com.example.qck.model.Exam;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

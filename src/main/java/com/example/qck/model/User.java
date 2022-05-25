@@ -1,6 +1,6 @@
-package com.example.qck.user;
+package com.example.qck.model;
 
-import com.example.qck.role.Role;
+import com.example.qck.model.Role;
 import lombok.Getter;
 import lombok.Setter;
 

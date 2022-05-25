@@ -1,4 +1,4 @@
-package com.example.qck.exam;
+package com.example.qck.model;
 
 import lombok.Getter;
 import lombok.Setter;

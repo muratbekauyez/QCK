@@ -1,4 +1,4 @@
-package com.example.qck.announcement;
+package com.example.qck.model;
 
 
 import lombok.Getter;

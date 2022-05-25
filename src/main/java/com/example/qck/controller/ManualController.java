@@ -1,5 +1,7 @@
-package com.example.qck.manual;
+package com.example.qck.controller;
 
+import com.example.qck.service.ManualService;
+import com.example.qck.model.Manual;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

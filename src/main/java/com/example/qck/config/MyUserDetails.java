@@ -1,7 +1,7 @@
 package com.example.qck.config;
 
-import com.example.qck.role.Role;
-import com.example.qck.user.User;
+import com.example.qck.model.Role;
+import com.example.qck.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

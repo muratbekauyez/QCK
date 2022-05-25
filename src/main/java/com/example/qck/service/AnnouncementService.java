@@ -1,5 +1,7 @@
-package com.example.qck.announcement;
+package com.example.qck.service;
 
+import com.example.qck.repository.AnnouncementRepository;
+import com.example.qck.model.Announcement;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

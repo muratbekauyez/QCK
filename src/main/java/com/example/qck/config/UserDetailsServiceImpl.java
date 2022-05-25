@@ -1,7 +1,7 @@
 package com.example.qck.config;
 
-import com.example.qck.user.User;
-import com.example.qck.user.UserRepository;
+import com.example.qck.model.User;
+import com.example.qck.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,5 @@
-package com.example.qck.role;
+package com.example.qck.model;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,14 +7,17 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "manual")
 @Getter
 @Setter
-public class Role {
+public class Manual {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "text")
+    private String text;
 }
