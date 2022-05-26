@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Learning Objective</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>Add New Learning Objective</h1>
+    <form action="#" th:action="@{/learningObjectives/saveLearningObjective}" th:object = "${learningObjective}" method="post">
+        <input type = "text" th:field = "*{name}" placeholder="Name"/> <br>
+        <input type = "text" th:field = "*{code}" placeholder="Code"/> <br>
+        <select th:field="*{subject}">
+            <option th:each="sub : ${allSubjects}"
+                    th:value="${sub.id}"
+                    th:text="${sub.name}">
+            </option>
+        </select><br>
+        <button type="submit">Save Learning Objective</button>
+    </form>
+</div>
+</body>
+</html>

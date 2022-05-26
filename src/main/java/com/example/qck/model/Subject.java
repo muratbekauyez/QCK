@@ -1,23 +1,20 @@
 package com.example.qck.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "manuals")
+@Table(name = "subjects")
 @Getter
 @Setter
-public class Manual {
+public class Subject {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
-    private String title;
-
-    @Column(name = "text")
-    private String text;
+    @Column(name = "name")
+    private String name;
 }
