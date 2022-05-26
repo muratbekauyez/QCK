@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>New Test</title>
+</head>
+
+<script type="text/javascript">
+    $(function (){
+        $('input[name="type"]').click(function() {
+            if (($("#multiple-button").not(":checked")) && ($("#open-button").not(":checked"))){
+                $("#multiple").hide();
+                $("#open").hide();
+            }
+            if ($("#multiple-button").is(":checked")){
+                $("#multiple").show();
+                $("#open").hide();
+            }else if ($("#open-button").is(":checked")){
+                $("#multiple").hide();
+                $("#open").show();
+            }
+        });
+    });
+</script>
+<body>
+<h1>Add New Learning Objective</h1>
+<form action="#" th:action="@{/testQuestions/saveTestQuestion}" th:object = "${testQuestion}" method="post">
+    <input type = "text" th:field = "*{question}" placeholder="Question"/> <br>
+    <input type="radio" id="multiple-button" th:field="*{type}" value="MULTIPLE_CHOICE" name="type"> Multiple Choice
+    <input type="radio" id="open-button" th:field="*{type}" value="OPEN" name="type"> Open Choice <br>
+
+    <div id="multiple" style="display: none">
+        <input type="text" th:field="*{questionOption.optionA}" placeholder="Option A"><br>
+        <input type="text" th:field="*{questionOption.optionB}" placeholder="Option B"><br>
+        <input type="text" th:field="*{questionOption.optionC}" placeholder="Option C"><br>
+        <input type="text" th:field="*{questionOption.optionD}" placeholder="Option D"><br>
+    </div>
+
+    <div id="open" style="display:none;">
+        <a>Open</a><br>
+    </div>
+
+    <select th:field="*{correctAnswer}">
+        <option th:value="A" th:text="A"></option>
+        <option th:value="B" th:text="B"></option>
+        <option th:value="C" th:text="C"></option>
+        <option th:value="D" th:text="D"></option>
+    </select><br>
+
+    <select th:field="*{learningObjective}">
+        <option th:each="lobs : ${learningObjectivesBySubject}"
+                th:value="${lobs.id}"
+                th:text="${lobs.name}">
+        </option>
+    </select><br>
+
+    <button type="submit">Save Test Question</button>
+
+
+
+
+
+
+</form>
+</body>
+</html>

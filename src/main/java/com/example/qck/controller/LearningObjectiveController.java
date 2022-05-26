@@ -28,12 +28,6 @@ public class LearningObjectiveController {
 
     @PostMapping("/saveLearningObjective")
     public String saveLearningObjective(@ModelAttribute("learningObjective") LearningObjective learningObjective){
-
-
-        System.out.println(learningObjective.getName());
-        System.out.println(learningObjective.getCode());
-        System.out.println(learningObjective.getSubject().getId());
-        System.out.println(learningObjective.getSubject().getName());
         learningObjectiveService.saveLearningObjective(learningObjective);
         return "redirect:/";
     }
