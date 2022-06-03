@@ -26,6 +26,9 @@ public class TestQuestion {
     @JoinColumn(name = "question_option_id")
     private QuestionOption questionOption;
 
+    @Column(name = "student_answer")
+    private String studentAnswer;
+
     @Column(name = "correct_answer")
     private String correctAnswer;
 

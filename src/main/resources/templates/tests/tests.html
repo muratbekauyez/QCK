@@ -12,6 +12,7 @@
 </div>
 <div th:each="test:${listTests}">
   <a th:href="@{/tests/{id}(id = ${test.id})}" th:text ="${test.name}"></a>
+  <a th:href="@{/tests/takeExam/{id}(id = ${test.id})}">Take Exam</a>
   <h5 th:text ="${test.subject.name}"></h5>
   <div sec:authorize="hasAnyAuthority('ADMIN')">
     <a th:href="@{/tests/edit/{id}(id = ${test.id})}">Edit</a>

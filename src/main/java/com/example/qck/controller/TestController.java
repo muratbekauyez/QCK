@@ -1,14 +1,20 @@
 package com.example.qck.controller;
 
+import com.example.qck.config.MyUserDetails;
+import com.example.qck.model.StudentTestAttempt;
 import com.example.qck.model.Test;
 import com.example.qck.model.TestQuestion;
 import com.example.qck.repository.LearningObjectiveRepository;
+import com.example.qck.repository.TestQuestionRepository;
 import com.example.qck.service.TestQuestionService;
 import com.example.qck.service.TestService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/tests")
@@ -16,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
 
     private final TestService testService;
-    private final TestQuestionService testQuestionService;
     private final LearningObjectiveRepository learningObjectiveRepository;
 
     @GetMapping
@@ -75,7 +80,7 @@ public class TestController {
         return "tests/update_test_question";
     }
 
-    @PostMapping("updateTestQuestion")
+    @PostMapping("/updateTestQuestion")
     public String updateTestQuestion(@RequestParam("testId")Long testId,
                                      @RequestParam("questionId")Long questionId,
                                      @ModelAttribute("testQuestion") TestQuestion testQuestion,
@@ -93,6 +98,26 @@ public class TestController {
         return "redirect:/tests/" + id;
     }
 
+    @GetMapping("/takeExam/{id}")
+    public String takeExam(@PathVariable Long id,
+                           @AuthenticationPrincipal MyUserDetails user,
+                           Model model){
+        model.addAttribute("user", user);
+        model.addAttribute("test", testService.getTestById(id));
+        model.addAttribute("studentTestAttempt", new StudentTestAttempt());
+        return "tests/student_test_attempt";
+
+    }
+
+    @PostMapping("/passTest")
+    public String passTest(@ModelAttribute("test")Test test,
+                         @AuthenticationPrincipal MyUserDetails user,
+                           Model model){
+        testService.saveStudentTestAttempt(test, user);
+        model.addAttribute("listTests", testService.getAllTests());
+        return "redirect:/tests";
+
+    }
 
 
 }

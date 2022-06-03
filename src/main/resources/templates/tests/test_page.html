@@ -17,10 +17,10 @@
     <!--    <a th:text ="*{type)}"></a> <br>-->
     Q: <a th:text ="${testQuestion.question}"></a> <br>
     <div th:if= "${testQuestion.questionOption != null}">
-        A)<a th:text="*{testQuestion.questionOption.optionA}"></a><br>
-        B)<a th:text="*{testQuestion.questionOption.optionB}"></a><br>
-        C)<a th:text="*{testQuestion.questionOption.optionC}"></a><br>
-        D)<a th:text="*{testQuestion.questionOption.optionD}"></a><br>
+        A)<a th:text="${testQuestion.questionOption.optionA}"></a><br>
+        B)<a th:text="${testQuestion.questionOption.optionB}"></a><br>
+        C)<a th:text="${testQuestion.questionOption.optionC}"></a><br>
+        D)<a th:text="${testQuestion.questionOption.optionD}"></a><br>
     </div>
 
 

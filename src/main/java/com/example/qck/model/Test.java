@@ -24,7 +24,7 @@ public class Test {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "tests_test_questions",
             joinColumns = {@JoinColumn(name = "test_id")},

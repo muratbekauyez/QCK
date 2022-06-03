@@ -1,18 +1,15 @@
 package com.example.qck.service;
 
-import com.example.qck.model.QuestionOption;
-import com.example.qck.model.QuestionType;
-import com.example.qck.model.Test;
-import com.example.qck.model.TestQuestion;
-import com.example.qck.repository.QuestionOptionRepository;
-import com.example.qck.repository.SubjectRepository;
-import com.example.qck.repository.TestQuestionRepository;
-import com.example.qck.repository.TestRepository;
+import com.example.qck.config.MyUserDetails;
+import com.example.qck.model.*;
+import com.example.qck.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PreRemove;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +21,8 @@ public class TestService {
     private final TestQuestionRepository testQuestionRepository;
     private final SubjectRepository subjectRepository;
     private final QuestionOptionRepository optionRepository;
-    private final TestQuestionService questionService;
+    private final UserRepository userRepository;
+    private final StudentTestAttemptRepository studentTestAttemptRepository;
 
     public List<Test> getAllTests(){
         return testRepository.findAll();
@@ -89,6 +87,47 @@ public class TestService {
             question.setQuestionOption(null);
         }
         return question;
+    }
+
+    public void saveStudentTestAttempt(Test temp, MyUserDetails user){
+        StudentTestAttempt studentTestAttempt = new StudentTestAttempt();
+        Test test = getTestById(temp.getId());
+        test.setQuestionList(temp.getQuestionList());
+
+
+        studentTestAttempt.setUser(userRepository.getUserByUsername(user.getUsername()));
+        studentTestAttempt.setTest(test);
+        studentTestAttempt.setDatePassed(new Date());
+        studentTestAttempt.setStudentQuestionAttempts(new ArrayList<>());
+
+
+        for(TestQuestion question : test.getQuestionList()){
+            StudentQuestionAttempt sqa = new StudentQuestionAttempt();
+            sqa.setQuestion(question);
+            sqa.setStudentAnswer(question.getStudentAnswer());
+            sqa.setTest(test);
+            studentTestAttempt.getStudentQuestionAttempts().add(sqa);
+        }
+
+        studentTestAttempt.setResult(getResultOfStudent(studentTestAttempt));
+        studentTestAttemptRepository.save(studentTestAttempt);
+
+    }
+
+
+    public Integer getResultOfStudent(StudentTestAttempt testAttempt){
+        Integer result = 0;
+        for (TestQuestion question : testAttempt.getTest().getQuestionList()){
+            String studentAnswer = question.getStudentAnswer();
+            String correctAnswer = getTestQuestionById(question.getId()).getCorrectAnswer();
+            if(question.getType().equals(QuestionType.MULTIPLE_CHOICE)){
+                if(studentAnswer.equals(correctAnswer)){
+                    result++;
+                }
+            }
+        }
+
+        return result;
     }
 
 

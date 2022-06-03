@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title th:text="${test.name}"></title>
+</head>
+
+<body>
+<form action="#" th:action="@{/tests/passTest}"  method="post">
+    <input type="hidden" th:field="${test.id}" th:value="${test.id}">
+    <div th:each="testQuestion, status : ${test.questionList}">
+        <input type="hidden" th:field="${test.questionList[__${status.index}__].id}" th:value="${test.questionList[__${status.index}__].id}">
+        <input type="hidden" th:field="${test.questionList[__${status.index}__].type}" th:value="${test.questionList[__${status.index}__].type}"/>
+        Q: <a th:text ="*{testQuestion.question}"></a> <br>
+        <div th:if= "*{testQuestion.questionOption != null}">
+            A)<a th:text="*{testQuestion.questionOption.optionA}"></a><br>
+            B)<a th:text="*{testQuestion.questionOption.optionB}"></a><br>
+            C)<a th:text="*{testQuestion.questionOption.optionC}"></a><br>
+            D)<a th:text="*{testQuestion.questionOption.optionD}"></a><br>
+            <input type="radio" class="studentAnswer" th:field="${test.questionList[__${status.index}__].studentAnswer}" value="A" name="studentAnswer"/> A
+            <input type="radio" class="studentAnswer" th:field="${test.questionList[__${status.index}__].studentAnswer}" value="B" name="studentAnswer"/> B
+            <input type="radio" class="studentAnswer" th:field="${test.questionList[__${status.index}__].studentAnswer}" value="C" name="studentAnswer"/> C
+            <input type="radio" class="studentAnswer" th:field="${test.questionList[__${status.index}__].studentAnswer}" value="D" name="studentAnswer"/> D
+        </div>
+
+        <div th:if= "*{testQuestion.questionOption == null}">
+            <input type = "text"  th:field="${test.questionList[__${status.index}__].studentAnswer}" placeholder="studentAnswer"/> <br>
+        </div>
+
+
+
+        <br><br>
+
+    </div>
+
+    <button type="submit">Pass Test</button>
+</form>
+</body>
+</html>
