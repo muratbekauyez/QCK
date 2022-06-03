@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title th:text="${test.name}"></title>
+</head>
+<body>
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+    <a th:href="@{/tests/{id}/newQuestion(id = ${test.id})}">Add Question</a>
+</div>
+<h2 th:text ="${test.name}"></h2>
+<h5 th:text="${test.subject.name}"></h5>
+
+<div th:each="testQuestion : ${test.questionList}">
+    <!--    <a th:text ="*{type)}"></a> <br>-->
+    Q: <a th:text ="${testQuestion.question}"></a> <br>
+    <div th:if= "${testQuestion.questionOption != null}">
+        A)<a th:text="*{testQuestion.questionOption.optionA}"></a><br>
+        B)<a th:text="*{testQuestion.questionOption.optionB}"></a><br>
+        C)<a th:text="*{testQuestion.questionOption.optionC}"></a><br>
+        D)<a th:text="*{testQuestion.questionOption.optionD}"></a><br>
+    </div>
+
+
+    Correct: <a th:text ="${testQuestion.correctAnswer}"></a><br>
+    Subject: <a th:text ="${testQuestion.learningObjective.subject.name}"></a>
+
+    <br>
+    <div sec:authorize="hasAnyAuthority('ADMIN')">
+        <a th:href="@{/tests/{id}/editQuestion/{questionId}(id = ${test.id}, questionId = ${testQuestion.id})}">Edit</a>
+        <a th:href="@{/tests/{id}/deleteQuestion/{questionId}(id = ${test.id}, questionId = ${testQuestion.id})}">Delete</a>
+    </div>
+
+    <br><br>
+
+</div>
+</body>
+</html>

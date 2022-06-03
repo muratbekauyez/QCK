@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <meta charset="UTF-8">
+  <title>New Test</title>
+</head>
+
+<h1>Add New Test</h1>
+<body>
+<form action="#" th:action="@{/tests/saveTest}" th:object = "${test}" method="post">
+  <input type = "text" th:field = "*{name}" placeholder="Name"/> <br>
+
+  <button type="submit">New Test</button>
+</form>
+
+</body>
+</html>

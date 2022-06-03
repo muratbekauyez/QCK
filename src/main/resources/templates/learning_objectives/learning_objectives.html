@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning Objectives</title>
+</head>
+<body>
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+    <a th:href="@{/learningObjectives/new}"> New Learning Objectives</a>
+</div>
+
+<div th:each="learningObjective:${listLearningObjectives}">
+    <h2 th:text ="${learningObjective.name}"></h2>
+    <h5 th:text ="${learningObjective.code}"></h5>
+    <h5 th:text ="${learningObjective.subject.name}"></h5>
+    <div sec:authorize="hasAnyAuthority('ADMIN')">
+        <a th:href="@{/learningObjectives/edit/{id}(id = ${learningObjective.id})}">Edit</a>
+    </div>
+</div>
+</body>
+</html>

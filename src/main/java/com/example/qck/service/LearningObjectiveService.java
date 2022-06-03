@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +19,16 @@ public class LearningObjectiveService {
     }
 
     public void saveLearningObjective(LearningObjective learningObjective){
+        learningObjectiveRepository.save(learningObjective);
+    }
+
+    public LearningObjective getLearningObjectiveById(Long id){
+        Optional<LearningObjective> learningObjective = learningObjectiveRepository.findById(id);
+        if(learningObjective.isEmpty()) throw new RuntimeException("Announcement not found for id: " + id);
+        return learningObjective.get();
+    }
+
+    public void updateLearningObjective(LearningObjective learningObjective){
         learningObjectiveRepository.save(learningObjective);
     }
 }

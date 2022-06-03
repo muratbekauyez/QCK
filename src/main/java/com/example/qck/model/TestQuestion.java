@@ -2,6 +2,8 @@ package com.example.qck.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -20,14 +22,14 @@ public class TestQuestion {
     @Enumerated(EnumType.STRING)
     private QuestionType type;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "question_option_id")
     private QuestionOption questionOption;
 
     @Column(name = "correct_answer")
     private String correctAnswer;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "learning_objective_id")
     private LearningObjective learningObjective;
 }

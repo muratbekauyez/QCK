@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Learning Objective</title>
+</head>
+<body>
+<h1>Update Learning Objective</h1>
+<form action="#" th:action="@{/learningObjectives/updateLearningObjective}" th:object="${learningObjective}" method="POST">
+    <input type="hidden" th:field="*{id}" value="*{id}">
+    <input type="text" th:field="*{name}" placeholder="Name"/> <br>
+    <input type="text" th:field="*{code}" placeholder="Code"/> <br>
+    <select th:field="*{subject}">
+        <option th:each="sub : ${allSubjects}"
+                th:value="${sub.id}"
+                th:text="${sub.name}">
+        </option>
+    </select><br>
+    <button type="submit">Update Learning Objective</button>
+</form>
+</body>
+</html>

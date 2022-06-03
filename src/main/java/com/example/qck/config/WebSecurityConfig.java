@@ -43,10 +43,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/tests/**").permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/**/new").hasAuthority("ADMIN")
-                .antMatchers("/**/edit/**").hasAuthority("ADMIN")
-                .antMatchers("/**/delete/**").hasAuthority("ADMIN")
+                .antMatchers("/announcements/**").permitAll()
+                .antMatchers("/learningObjectives/**").permitAll()
+                .antMatchers("/testQuestions/**").permitAll()
+//                .antMatchers("/**/new").hasAuthority("ADMIN")
+//                .antMatchers("/**/edit/**").hasAuthority("ADMIN")
+//                .antMatchers("/**/delete/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -54,8 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .and()
                 .logout()
-                    .permitAll()
-                    .and()
-                .exceptionHandling().accessDeniedPage("/error");
+                    .permitAll();
+//                    .and()
+//                .exceptionHandling().accessDeniedPage("/error");
     }
 }

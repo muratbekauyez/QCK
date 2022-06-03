@@ -4,7 +4,7 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta charset="UTF-8">
-    <title>New Test</title>
+    <title>New Test Question</title>
 </head>
 
 <script type="text/javascript">
@@ -29,8 +29,9 @@
     });
 </script>
 <body>
-<h1>Add New Learning Objective</h1>
-<form action="#" th:action="@{/testQuestions/saveTestQuestion}" th:object = "${testQuestion}" method="post">
+<h1>Add New Test Question</h1>
+<form action="#" th:action="@{/tests/saveTestQuestion}" th:object = "${testQuestion}" method="post">
+    <input type="hidden" name="testId" th:value="${testId}">
     <input type="radio" id="multiple-button" th:field="*{type}" value="MULTIPLE_CHOICE" name="type"> Multiple Choice
     <input type="radio" id="open-button" th:field="*{type}" value="OPEN" name="type"> Open Choice <br>
 
@@ -63,12 +64,7 @@
         </option>
     </select><br>
 
-    <button type="submit">Save Test Question</button>
-
-
-
-
-
+    <button type="submit">New Test Question</button>
 
 </form>
 </body>
