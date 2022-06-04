@@ -5,7 +5,7 @@ name: Diploma ci-cd
 
 on:
   push:
-    branches: [ "joker" ]
+    branches: [ "joker", "Chpolzhik-patch-1" ]
 
 jobs:
   build:
