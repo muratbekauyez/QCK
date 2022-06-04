@@ -32,7 +32,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
   deploy:
     runs-on: self-hosted
-    needs: bulid
+    needs: build
     steps:
       - name: Run docker image
         run: docker run --name diploma -p 8080:8080 -d ozhek/dimploma:v1
