@@ -95,6 +95,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>diploma</finalName>
     </build>
     <repositories>
         <repository>
