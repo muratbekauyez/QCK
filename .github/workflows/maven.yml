@@ -35,7 +35,7 @@ jobs:
     needs: build
     steps:
       - name: compose up
-        run: docker-compose -f docker-compose.yml up -d
+        run: docker compose -f docker-compose.yml up -d
 
 
 
