@@ -34,6 +34,8 @@ jobs:
     runs-on: self-hosted
     needs: build
     steps:
+      - name: Pull new image
+        run: docker pull ozhek/dimploma:v1
       - name: Run docker image
         run: docker run --name diploma -p 8080:8080 -d ozhek/dimploma:v1
 
