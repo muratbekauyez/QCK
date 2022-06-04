@@ -34,11 +34,9 @@ jobs:
     runs-on: self-hosted
     needs: build
     steps:
-      - name: Kill other containers
-        run: docker rm -f $(docker ps -a -q)
-      - name: Update image
-        run: docker pull ozhek/dimploma:v1
-      - name: Run docker container
-        run: docker run --name diploma -p 8080:8080 -d ozhek/dimploma:v1
+      - name: compose up
+        run: docker-compose -f docker-compose.yml up -d
+
+
 
 
