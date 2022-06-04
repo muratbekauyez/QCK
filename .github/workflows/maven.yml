@@ -39,6 +39,6 @@ jobs:
       - name: Update image
         run: docker pull ozhek/dimploma:v1
       - name: Run docker container
-        run: docker run --name diploma -d ozhek/dimploma:v1
+        run: docker run --name diploma -p 8080:8080-d ozhek/dimploma:v1
 
 
