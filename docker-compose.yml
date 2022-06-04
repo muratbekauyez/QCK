@@ -1,5 +1,5 @@
 services:
   web:
-    build: ozhek/dimploma:v1
+    image: ozhek/dimploma:v1
     ports:
       - "8080:8080"
