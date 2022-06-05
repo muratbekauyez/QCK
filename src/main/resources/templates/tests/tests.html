@@ -11,15 +11,17 @@
   <a th:href="@{/tests/new}"> New Test</a>
 </div>
 <div th:each="test:${listTests}">
-  <a th:href="@{/tests/{id}(id = ${test.id})}" th:text ="${test.name}"></a>
+  <a th:href="@{/tests/{id}(id = ${test.id})}" th:text ="${test.name}"></a><br>
   <a th:href="@{/tests/takeExam/{id}(id = ${test.id})}">Take Exam</a>
-  <h5 th:text ="${test.subject.name}"></h5>
+  <a th:href="@{/tests/{id}/studentsAttempts(id = ${test.id})}">Students Attempts</a><br>
+  <a th:text ="${test.subject.name}"></a><br>
   <div sec:authorize="hasAnyAuthority('ADMIN')">
     <a th:href="@{/tests/edit/{id}(id = ${test.id})}">Edit</a>
   </div>
   <div sec:authorize="hasAnyAuthority('ADMIN')">
     <a th:href="@{/tests/delete/{id}(id = ${test.id})}">Delete</a>
   </div>
+  <br><br>
 </div>
 </body>
 </html>

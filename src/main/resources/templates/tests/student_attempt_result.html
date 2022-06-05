@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attempt Result</title>
+</head>
+<h5 th:text="${studentAttempt.studentQuestionAttempts[0].id}"></h5>
+<h5 th:text="${studentAttempt.user.username}"></h5>
+<h5 th:text="${studentAttempt.test.name}"></h5>
+<h5 th:text="${studentAttempt.test.subject.name}"></h5>
+<h5 th:text="${studentAttempt.test.name}"></h5>
+<h5 th:text="${studentAttempt.datePassed}"></h5>
+<body>
+<form action="#" th:action="@{/tests/checkTest}" th:object="${studentAttempt}" method="post">
+    <input type="hidden" th:field="${studentAttempt.id}" th:value="${studentAttempt.id}">
+    <table>
+        <tr>
+            <th>Question</th>
+            <th>Correct Answer</th>
+            <th>Student Answer</th>
+            <th>Result</th>
+        </tr>
+
+        <tr th:each="questionAttempt, index:${studentAttempt.studentQuestionAttempts}">
+            <input type="hidden" th:field="${studentAttempt.studentQuestionAttempts[__${index.index}__].id}" th:value="${studentAttempt.studentQuestionAttempts[__${index.index}__].id}">
+            <input type="hidden" th:field="${studentAttempt.studentQuestionAttempts[__${index.index}__].question}" th:value="${studentAttempt.studentQuestionAttempts[__${index.index}__].question}">
+            <td th:text="${questionAttempt.question.question}"></td>
+            <td th:text="${questionAttempt.question.correctAnswer}"></td>
+            <td th:text="${questionAttempt.studentAnswer}"></td>
+            <td th:if="${questionAttempt.isAnswerCorrect == true}">True</td>
+            <td th:if="${questionAttempt.isAnswerCorrect == false}">False</td>
+            <td th:if="${questionAttempt.isAnswerCorrect == null}">
+                <input type="radio" class="check" name="check" th:field="${studentAttempt.studentQuestionAttempts[__${index.index}__].isAnswerCorrect}" th:value="${true}" /> Yes
+                <input type="radio" class="check" name="check" th:field="${studentAttempt.studentQuestionAttempts[__${index.index}__].isAnswerCorrect}" th:value="${false}" /> No
+            </td>
+        </tr>
+
+    </table>
+
+    <button type="submit">Check Test</button>
+</form>
+</body>
+</html>

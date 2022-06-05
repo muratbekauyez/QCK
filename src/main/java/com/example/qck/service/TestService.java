@@ -23,6 +23,8 @@ public class TestService {
     private final QuestionOptionRepository optionRepository;
     private final UserRepository userRepository;
     private final StudentTestAttemptRepository studentTestAttemptRepository;
+    private final StudentQuestionAttemptRepository studentQuestionAttemptRepository;
+    private final TeacherCheckRepository teacherCheckRepository;
 
     public List<Test> getAllTests(){
         return testRepository.findAll();
@@ -31,6 +33,7 @@ public class TestService {
     public void saveTest(Test test){
         //needs changes in future
         test.setSubject(subjectRepository.getOne(1L));
+        test.setEnabled(true);
         testRepository.save(test);
     }
 
@@ -100,7 +103,6 @@ public class TestService {
         studentTestAttempt.setDatePassed(new Date());
         studentTestAttempt.setStudentQuestionAttempts(new ArrayList<>());
 
-
         for(TestQuestion question : test.getQuestionList()){
             StudentQuestionAttempt sqa = new StudentQuestionAttempt();
             sqa.setQuestion(question);
@@ -108,27 +110,45 @@ public class TestService {
             sqa.setTest(test);
             studentTestAttempt.getStudentQuestionAttempts().add(sqa);
         }
-
-        studentTestAttempt.setResult(getResultOfStudent(studentTestAttempt));
+        checkAllQuestions(studentTestAttempt);
         studentTestAttemptRepository.save(studentTestAttempt);
 
     }
 
 
-    public Integer getResultOfStudent(StudentTestAttempt testAttempt){
-        Integer result = 0;
-        for (TestQuestion question : testAttempt.getTest().getQuestionList()){
-            String studentAnswer = question.getStudentAnswer();
-            String correctAnswer = getTestQuestionById(question.getId()).getCorrectAnswer();
-            if(question.getType().equals(QuestionType.MULTIPLE_CHOICE)){
-                if(studentAnswer.equals(correctAnswer)){
-                    result++;
-                }
+    public void checkAllQuestions(StudentTestAttempt testAttempt){
+        for(StudentQuestionAttempt questionAttempt : testAttempt.getStudentQuestionAttempts()){
+            QuestionType type = questionAttempt.getQuestion().getType();
+            String correctAnswer = getTestQuestionById(questionAttempt.getQuestion().getId()).getCorrectAnswer();
+            String studentAnswer = questionAttempt.getStudentAnswer();
+            if(studentAnswer == null){
+                questionAttempt.setIsAnswerCorrect(false);
+                continue;
+            }
+            if(type.equals(QuestionType.MULTIPLE_CHOICE)){
+                questionAttempt.setIsAnswerCorrect(studentAnswer.equals(correctAnswer));
+            }else {
+                questionAttempt.setIsAnswerCorrect(null);
             }
         }
-
-        return result;
     }
+
+    public List<StudentTestAttempt> allStudentTestAttemptsByTest(Long testId){
+        return studentTestAttemptRepository.findAllByTestId(testId);
+    }
+
+    public StudentTestAttempt getStudentTestAttempt(Long attemptId){
+        Optional<StudentTestAttempt> testAttempt = studentTestAttemptRepository.findById(attemptId);
+        if(testAttempt.isEmpty())throw new RuntimeException("Test Attempt not found for id: " + attemptId);
+        return testAttempt.get();
+    }
+
+    public StudentQuestionAttempt getStudentQuestionAttempt(Long attemptId){
+        Optional<StudentQuestionAttempt> questionAttempt = studentQuestionAttemptRepository.findById(attemptId);
+        if(questionAttempt.isEmpty()) throw new RuntimeException("Question Attempt not found for id: " + attemptId);
+        return questionAttempt.get();
+    }
+
 
 
 }

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 public class TestQuestion {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "question")
@@ -26,7 +26,7 @@ public class TestQuestion {
     @JoinColumn(name = "question_option_id")
     private QuestionOption questionOption;
 
-    @Column(name = "student_answer")
+    @Transient
     private String studentAnswer;
 
     @Column(name = "correct_answer")

@@ -5,6 +5,7 @@ import com.example.qck.model.Announcement;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class AnnouncementService {
     }
 
     public void saveAnnouncement(Announcement announcement){
+        announcement.setDate(new Date());
         announcementRepository.save(announcement);
     }
 
