@@ -31,8 +31,8 @@ public class TeacherService {
             StudentQuestionAttempt questionAttempt = testService.getStudentQuestionAttempt(entity.getId());
             if(questionAttempt.getIsAnswerCorrect() == null) {
                 questionAttempt.setIsAnswerCorrect(entity.getIsAnswerCorrect());
-                result++;
-            }else if(questionAttempt.getIsAnswerCorrect()) result++;
+            }
+            if(questionAttempt.getIsAnswerCorrect()) result++;
             questionAttemptsByTestAttempt.add(questionAttempt);
         }
         testAttempt.setStudentQuestionAttempts(questionAttemptsByTestAttempt);

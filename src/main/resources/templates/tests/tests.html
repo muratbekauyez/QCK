@@ -8,7 +8,7 @@
 <body>
 <h1>Tests</h1>
 <div sec:authorize="hasAnyAuthority('ADMIN')">
-  <a th:href="@{/tests/new}"> New Test</a>
+  <a th:href="@{/tests/new}"> New Test</a><br>
 </div>
 <div th:each="test:${listTests}">
   <a th:href="@{/tests/{id}(id = ${test.id})}" th:text ="${test.name}"></a><br>
