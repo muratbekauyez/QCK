@@ -24,10 +24,13 @@ public class TestService {
     private final UserRepository userRepository;
     private final StudentTestAttemptRepository studentTestAttemptRepository;
     private final StudentQuestionAttemptRepository studentQuestionAttemptRepository;
-    private final TeacherCheckRepository teacherCheckRepository;
 
     public List<Test> getAllTests(){
         return testRepository.findAll();
+    }
+
+    public List<Test> getAllEnabledTest(){
+        return testRepository.findTestsByEnabled(true);
     }
 
     public void saveTest(Test test){
@@ -64,6 +67,18 @@ public class TestService {
         testQuestion = setNullQuestionOptionIfEmpty(testQuestion);
         testQuestionRepository.save(testQuestion);
 
+    }
+
+    public void updateTest(Test test){
+        Test old = getTestById(test.getId());
+        old.setName(test.getName());
+        testRepository.save(old);
+    }
+
+    public void disableTest(Long id){
+        Test test = getTestById(id);
+        test.setEnabled(false);
+        testRepository.save(test);
     }
 
     public TestQuestion getTestQuestionById(Long id){

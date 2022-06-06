@@ -25,7 +25,7 @@ public class TestController {
 
     @GetMapping
     public String testsPage(Model model){
-        model.addAttribute("listTests", testService.getAllTests());
+        model.addAttribute("listTests", testService.getAllEnabledTest());
         return "tests/tests";
     }
 
@@ -49,6 +49,19 @@ public class TestController {
         return "redirect:/tests";
     }
 
+    @GetMapping("/edit/{id}")
+    public String showUpdateTestForm(@PathVariable Long id, Model model){
+        Test test = testService.getTestById(id);
+        model.addAttribute("test", test);
+        return "tests/update_test";
+    }
+
+    @PostMapping("/updateTest")
+    public String updateTest(@ModelAttribute("test")Test test){
+        testService.updateTest(test);
+        return "redirect:/tests";
+    }
+
     @GetMapping("/{id}/newQuestion")
     public String showNewTestQuestionForm(@PathVariable(value = "id")Long id, Model model){
         TestQuestion testQuestion = new TestQuestion();
@@ -65,6 +78,12 @@ public class TestController {
         Test test = testService.addTestQuestion(testId, testQuestion);
         model.addAttribute("test", test);
         return "redirect:/tests/" + testId;
+    }
+
+    @GetMapping("/delete/{id}")
+    public String disableTest(@PathVariable Long id){
+        testService.disableTest(id);
+        return "redirect:/tests";
     }
 
 
