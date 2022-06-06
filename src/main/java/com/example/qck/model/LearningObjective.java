@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 public class LearningObjective  {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")

@@ -14,7 +14,7 @@ import java.util.List;
 public class StudentTestAttempt {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -32,9 +32,6 @@ public class StudentTestAttempt {
             inverseJoinColumns = {@JoinColumn(name = "question_attempt_id")}
     )
     private List<StudentQuestionAttempt> studentQuestionAttempts;
-
-    @Column(name = "result")
-    private Integer result;
 
     @Column(name = "date_passed")
     private Date datePassed;

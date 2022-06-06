@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attempts</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Student Passed</th>
+        <th>Date</th>
+        <th></th>
+    </tr>
+    <tr th:each="attempt, index:${studentAttempts}"
+        th:style="${index.odd}? 'font-weight: bold;'"
+        th:alt-title="${index.even}? 'even' : 'odd'">
+
+        <td th:text="${attempt.user.username}"></td>
+        <td th:text="${attempt.datePassed}"></td>
+        <td><a th:href="@{/tests/studentAttempt/{id}(id = ${attempt.id})}">Open</a></td>
+    </tr>
+
+</table>
+
+
+</body>
+</html>

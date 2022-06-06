@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 public class StudentQuestionAttempt {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -24,5 +24,8 @@ public class StudentQuestionAttempt {
 
     @Column(name = "student_answer")
     private String studentAnswer;
+
+    @Column(name = "is_answer_correct")
+    private Boolean isAnswerCorrect;
 
 }
