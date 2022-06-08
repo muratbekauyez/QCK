@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "manuals")
@@ -20,4 +21,12 @@ public class Manual {
 
     @Column(name = "text")
     private String text;
+
+    @Column(name = "filename")
+    private String filename;
+
+    @Column(name = "content")
+    private byte[] content;
+
+    private Date date;
 }

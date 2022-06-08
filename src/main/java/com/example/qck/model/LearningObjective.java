@@ -25,5 +25,8 @@ public class LearningObjective  {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
+    @Column(name = "enabled")
+    private Boolean enabled;
+
 
 }

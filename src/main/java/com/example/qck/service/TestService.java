@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.PreRemove;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

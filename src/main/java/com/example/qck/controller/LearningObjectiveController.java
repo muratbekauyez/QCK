@@ -1,12 +1,20 @@
 package com.example.qck.controller;
 
+import com.example.qck.config.MyUserDetails;
 import com.example.qck.model.LearningObjective;
+import com.example.qck.model.Subject;
+import com.example.qck.model.User;
 import com.example.qck.repository.SubjectRepository;
+import com.example.qck.repository.UserRepository;
 import com.example.qck.service.LearningObjectiveService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/learningObjectives")
@@ -15,18 +23,26 @@ public class LearningObjectiveController {
 
     private final LearningObjectiveService learningObjectiveService;
     private final SubjectRepository subjectRepository;
+    private final UserRepository userRepository;
 
     @GetMapping
     public String learningObjectivesPage(Model model){
-        model.addAttribute("listLearningObjectives", learningObjectiveService.getAllLearningObjectives());
+        model.addAttribute("listLearningObjectives", learningObjectiveService.getAllEnabledLearningObjectives());
         return "learning_objectives/learning_objectives";
     }
 
     @GetMapping("/new")
-    public String showNewLearningObjectiveForm(Model model){
+    public String showNewLearningObjectiveForm(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+        User user = userRepository.getUserByUsername(myUserDetails.getUsername());
         LearningObjective learningObjective = new LearningObjective();
         model.addAttribute("learningObjective", learningObjective);
-        model.addAttribute("allSubjects", subjectRepository.findAll());
+        if(user.getSubject() != null){
+            List<Subject> subject = new ArrayList<>();
+            subject.add(user.getSubject());
+            model.addAttribute("allSubjects", subject);
+        }else {
+            model.addAttribute("allSubjects", subjectRepository.findAll());
+        }
         return "learning_objectives/new_learning_objective";
     }
 
@@ -37,16 +53,30 @@ public class LearningObjectiveController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showUpdateLearningObjectiveForm(@PathVariable(value = "id")Long id, Model model){
+    public String showUpdateLearningObjectiveForm(@PathVariable(value = "id")Long id, Model model,
+                                                  @AuthenticationPrincipal MyUserDetails myUserDetails){
+        User user = userRepository.getUserByUsername(myUserDetails.getUsername());
         LearningObjective learningObjective = learningObjectiveService.getLearningObjectiveById(id);
         model.addAttribute("learningObjective", learningObjective);
-        model.addAttribute("allSubjects", subjectRepository.findAll());
+        if(user.getSubject() != null){
+            List<Subject> subject = new ArrayList<>();
+            subject.add(user.getSubject());
+            model.addAttribute("allSubjects", subject);
+        }else {
+            model.addAttribute("allSubjects", subjectRepository.findAll());
+        }
         return "learning_objectives/update_learning_objective";
     }
 
     @PostMapping("/updateLearningObjective")
     public String updateLearningObjective(@ModelAttribute("learningObjective")LearningObjective learningObjective){
         learningObjectiveService.updateLearningObjective(learningObjective);
+        return "redirect:/learningObjectives";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String disableTest(@PathVariable Long id){
+        learningObjectiveService.disableTest(id);
         return "redirect:/learningObjectives";
     }
 

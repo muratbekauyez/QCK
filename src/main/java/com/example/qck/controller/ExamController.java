@@ -38,7 +38,6 @@ public class ExamController {
 
     @PostMapping("/saveExam")
     public String saveExam(@RequestParam Map<String, String> requestParams, @RequestParam("content")MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
-        System.out.println("test");
         examService.saveExam(requestParams, multipartFile, ra);
         return "redirect:/exams";
     }
