@@ -68,5 +68,10 @@ public class ManualController {
         manualService.downloadFile(id, response);
     }
 
+    @GetMapping("/openFile")
+    public void openFile(@Param("id")Long id, HttpServletResponse response) throws Exception {
+        manualService.openFile(id, response);
+    }
+
 
 }

@@ -114,7 +114,7 @@
 
             </div>
             <div class="pdf-btn-container">
-                <a href="O.R.pdf" class="pdf-btn">
+                <a th:href="@{'/manuals/openFile?id=' + ${manual.id}}" target="_blank" class="pdf-btn">
                     Читать
                 </a>
                 <a th:href="@{'/manuals/download?id=' + ${manual.id}}" class="pdf-btn">

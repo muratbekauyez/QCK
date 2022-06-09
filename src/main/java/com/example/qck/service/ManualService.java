@@ -1,5 +1,6 @@
 package com.example.qck.service;
 
+import com.example.qck.model.Announcement;
 import com.example.qck.repository.ManualRepository;
 import com.example.qck.model.Manual;
 import lombok.AllArgsConstructor;
@@ -56,14 +57,24 @@ public class ManualService {
     }
 
     public void downloadFile(Long id, HttpServletResponse response) throws Exception{
-        Optional<Manual> optionalManual = manualRepository.findById(id);
-        if(optionalManual.isEmpty()) throw new Exception("Could not find exam with ID:" + id);
-
-        Manual manual = optionalManual.get();
+        Manual manual = getManualById(id);
 
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=" + manual.getFilename();
+        response.setHeader(headerKey, headerValue);
+
+        ServletOutputStream outputStream = response.getOutputStream();
+        outputStream.write(manual.getContent());
+        outputStream.close();
+    }
+
+    public void openFile(Long id, HttpServletResponse response) throws Exception{
+        Manual manual = getManualById(id);
+
+        response.setContentType("application/pdf");
+        String headerKey = "Content-Disposition,";
+        String headerValue = "inline; filename=" + manual.getFilename();
         response.setHeader(headerKey, headerValue);
 
         ServletOutputStream outputStream = response.getOutputStream();
