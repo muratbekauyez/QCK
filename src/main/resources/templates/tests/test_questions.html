@@ -6,7 +6,7 @@
     <title>Test Questions</title>
 </head>
 <body>
-<div sec:authorize="hasAnyAuthority('ADMIN')">
+<div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
     <a th:href="@{/testQuestions/new}"> New Test Question</a>
 </div>
 <div th:each="testQuestion:${listTestQuestions}">
@@ -20,11 +20,11 @@
     </div>
 
 
-    Correct: <a th:text ="${testQuestion.correctAnswer}"></a><br>
-    Subject: <a th:text ="${testQuestion.learningObjective.subject.name}"></a>
+<!--    Correct: <a th:text ="${testQuestion.correctAnswer}"></a><br>-->
+<!--    Subject: <a th:text ="${testQuestion.learningObjective.subject.name}"></a>-->
 
     <br>
-    <div sec:authorize="hasAnyAuthority('ADMIN')">
+    <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
         <a th:href="@{/testQuestions/edit/{id}(id = ${testQuestion.id})}">Edit</a>
         <a th:href="@{/testQuestions/delete/{id}(id = ${testQuestion.id})}">Delete</a>
     </div>

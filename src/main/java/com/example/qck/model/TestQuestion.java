@@ -35,4 +35,8 @@ public class TestQuestion {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "learning_objective_id")
     private LearningObjective learningObjective;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "taxonomy_id")
+    private Taxonomy taxonomy;
 }

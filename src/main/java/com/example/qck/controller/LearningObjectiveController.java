@@ -8,6 +8,7 @@ import com.example.qck.repository.SubjectRepository;
 import com.example.qck.repository.UserRepository;
 import com.example.qck.service.LearningObjectiveService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,7 @@ public class LearningObjectiveController {
     }
 
     @GetMapping("/new")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String showNewLearningObjectiveForm(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
         User user = userRepository.getUserByUsername(myUserDetails.getUsername());
         LearningObjective learningObjective = new LearningObjective();
@@ -53,6 +55,7 @@ public class LearningObjectiveController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String showUpdateLearningObjectiveForm(@PathVariable(value = "id")Long id, Model model,
                                                   @AuthenticationPrincipal MyUserDetails myUserDetails){
         User user = userRepository.getUserByUsername(myUserDetails.getUsername());
@@ -75,6 +78,7 @@ public class LearningObjectiveController {
     }
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String disableTest(@PathVariable Long id){
         learningObjectiveService.disableTest(id);
         return "redirect:/learningObjectives";

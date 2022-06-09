@@ -8,6 +8,7 @@ import com.example.qck.service.LearningObjectiveService;
 import com.example.qck.service.TeacherService;
 import com.example.qck.service.TestService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ public class TestController {
     }
 
     @GetMapping("/new")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String showNewTestForm(Model model){
         Test test = new Test();
         model.addAttribute("test", test);
@@ -70,6 +72,7 @@ public class TestController {
     }
 
     @GetMapping("/{id}/newQuestion")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String showNewTestQuestionForm(@PathVariable(value = "id")Long id, Model model,
                                           @AuthenticationPrincipal MyUserDetails myUserDetails){
         TestQuestion testQuestion = new TestQuestion();
@@ -97,6 +100,7 @@ public class TestController {
 
 
     @GetMapping("{id}/editQuestion/{questionId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String showUpdateQuestionForm(@PathVariable(value = "id")Long id,
                                          @PathVariable(value = "questionId") Long questionId,
                                          Model model){
@@ -119,6 +123,7 @@ public class TestController {
     }
 
     @GetMapping("{id}/deleteQuestion/{questionId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String deleteTestQuestion(@PathVariable(value = "id") Long id,
                                      @PathVariable(value = "questionId") Long questionId){
         testService.deleteByQuestionId(questionId);
@@ -126,6 +131,7 @@ public class TestController {
     }
 
     @GetMapping("/takeExam/{id}")
+    @PreAuthorize("hasAuthority('USER')")
     public String takeExam(@PathVariable Long id,
                            @AuthenticationPrincipal MyUserDetails user,
                            Model model){
@@ -145,6 +151,7 @@ public class TestController {
     }
     
     @GetMapping("/{id}/studentsAttempts")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String allStudentAttempts(@PathVariable("id") Long testId,
                                      Model model){
         model.addAttribute("studentAttempts", testService.allStudentTestAttemptsByTest(testId));
@@ -152,6 +159,7 @@ public class TestController {
     }
 
     @GetMapping("/studentAttempt/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String studentAttempt(@PathVariable("id") Long attemptId,
                                  Model model){
         model.addAttribute("studentAttempt", testService.getStudentTestAttempt(attemptId));
@@ -160,6 +168,7 @@ public class TestController {
     }
 
     @PostMapping("/checkTest")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     public String checkTest(@ModelAttribute("studentAttempt")StudentTestAttempt testAttempt,
                             @AuthenticationPrincipal MyUserDetails user){
         teacherService.saveChecking(testAttempt, user);

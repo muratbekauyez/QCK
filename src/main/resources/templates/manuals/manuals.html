@@ -1,24 +1,157 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manuals</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link type="text/css" th:rel="stylesheet" href="../../static/css/global.css" th:href="@{css/global.css}" >
+    <link type="text/css" th:rel="stylesheet" href="../../static/css/bootstrap.css" th:href="@{css/bootstrap.css}">
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css}" th:rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link type="text/css" th:rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css}"/>
+    <!-- Google Fonts -->
+    <link th:rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap}"/>
+    <!-- MDB -->
+    <link th:rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.css}"/>
+    <!-- MDB -->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.js}"></script>
 </head>
-<body>
-<h1>Manuals List</h1>
-<div sec:authorize="hasAnyAuthority('ADMIN')">
-    <a th:href="@{/manuals/new}"> New Manual</a>
-</div>
-<div th:each="manual:${listManuals}">
-    <h2 th:text ="${manual.title}"></h2>
-    <h5 th:text ="${manual.text}"></h5>
-    <div sec:authorize="hasAnyAuthority('ADMIN')">
-        <a th:href="@{/manuals/edit/{id}(id = ${manual.id})}">Edit</a>
+
+<body  style="background:linear-gradient(180deg, rgba(155, 217, 242, 0) 41.16%, rgba(255, 255, 255, 0.7) 100%), linear-gradient(237.67deg, rgba(155, 217, 242, 0) 30.62%, rgba(255, 215, 138, 0.33) 100%), linear-gradient(121.92deg, rgba(155, 217, 242, 0) 31.4%, rgba(255, 215, 138, 0.33) 100%), linear-gradient(115.18deg, rgba(186, 168, 230, 0.5) -35.29%, rgba(186, 168, 230, 0) 57.9%), linear-gradient(245.41deg, rgba(186, 168, 230, 0.55) -12.18%, rgba(155, 217, 242, 0) 56.8%), linear-gradient(0deg, rgba(226, 216, 250, 0.12), rgba(226, 216, 250, 0.12)), #BCD4F2;">
+
+<div  class="col-md-10 mt-3 bg-light" style="background-color:white; width: 1450px; height: 800px; margin-left: 30px; border-radius: 30px;">
+
+    <!-- Navbar -->
+    <nav class="rounded navbar navbar-expand-lg navbar-light bg-white" style="position: relative;">
+        <!-- Container wrapper -->
+        <div class="container-fluid" style="margin-left: 18px;">
+            <!-- Toggle button -->
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
+
+            </a>
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 bg-white">
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/tests}">Тесты</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/announcements}">Объявления</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/manuals}">Справочник</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" href="analytic.html">Аналитика</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+        <!-- Avatar -->
+        <div>
+            <a class="nav-link" href="analytic.html">
+                <img src="../../static/img/icon.svg" th:src=@{img/icon.svg} style="width:25px; height: 25px;" >
+            </a>
+        </div>
+        <div class="dropdown m-3 mx-5 ">
+            <a
+                    class="dropdown-toggle d-fcol-md-2 padding-0lex align-items-center hidden-arrow nav-link "
+                    href="#"
+                    id="navbarDropdownMenuAvatar"
+                    role="button"
+                    data-mdb-toggle="dropdown"
+                    aria-expanded="false"
+            >
+                User
+            </a>
+            <ul
+                    class="dropdown-menu dropdown-menu-end "
+                    aria-labelledby="navbarDropdownMenuAvatar"
+            >
+                <li>
+                    <a class="dropdown-item" href="#">My profile</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#">Settings</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right elements -->
+
+        <!-- Container wrapper -->
+    </nav>
+
+    <!-- Navbar -->
+    <div th:each="manual:${listManuals}" class="pdf-item way way--active mt-3">
+        <div th:text ="${manual.title}" class="pdf-item-title">
+
+        </div>
+        <div th:text ="${manual.text}" class="pdf-content">
+
+        </div>
+        <div class="pdf-bottom">
+            <div class="pdf-date">
+
+            </div>
+            <div class="pdf-btn-container">
+                <a href="O.R.pdf" class="pdf-btn">
+                    Читать
+                </a>
+                <a th:href="@{'/manuals/download?id=' + ${manual.id}}" class="pdf-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
+                    </svg>
+                </a>
+                <div sec:authorize="hasAnyAuthority('ADMIN')">
+                    <a th:href="@{/manuals/delete/{id}(id = ${manual.id})}" class="pdf-btn"> <img class="delete " src="../../static/img/delete.svg" th:src="@{img/delete.svg}"> </a>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <div sec:authorize="hasAnyAuthority('ADMIN')">
-        <a th:href="@{/manuals/delete/{id}(id = ${manual.id})}">Delete</a>
+
+
+
+
+    <div class="row" style="margin-left:3px;">
+        <div class="col-xs-12" sec:authorize="hasAnyAuthority('ADMIN')">
+            <div class="text-">
+                <a th:href="@{/manuals/new}" type="button" class="btn btn-default">
+                    <img src="../../static/img/plus_icon.svg" th:src="@{img/plus_icon.svg}">
+                </a>
+            </div>
+        </div>
     </div>
+
+
+
 </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<ul class="nav nav-tabs">
+</ul>
 </body>
 </html>
