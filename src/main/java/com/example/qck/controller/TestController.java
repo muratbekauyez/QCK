@@ -3,6 +3,7 @@ package com.example.qck.controller;
 import com.example.qck.config.MyUserDetails;
 import com.example.qck.model.*;
 import com.example.qck.repository.LearningObjectiveRepository;
+import com.example.qck.repository.SubjectRepository;
 import com.example.qck.repository.UserRepository;
 import com.example.qck.service.LearningObjectiveService;
 import com.example.qck.service.TeacherService;
@@ -24,18 +25,31 @@ public class TestController {
     private final LearningObjectiveService learningObjectiveService;
     private final LearningObjectiveRepository learningObjectiveRepository;
     private final UserRepository userRepository;
+    private final SubjectRepository subjectRepository;
 
     @GetMapping
-    public String testsPage(Model model){
-        model.addAttribute("listTests", testService.getAllEnabledTest());
+    public String testsPage(Model model,
+                            @AuthenticationPrincipal MyUserDetails userDetails){
+        User user = userRepository.getUserByUsername(userDetails.getUsername());
+
+        for (Role role : user.getRoles()){
+            if(role.getId().equals(1L)){
+                model.addAttribute("listTests", testService.getAllEnabledTest());
+            }else {
+                model.addAttribute("listTests", testService.getAllEnabledTestsBySubject(user.getStudyYears()));
+            }
+            break;
+        }
+
         return "tests/tests";
     }
 
     @GetMapping("/new")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String showNewTestForm(Model model){
         Test test = new Test();
         model.addAttribute("test", test);
+        model.addAttribute("allSubjects", subjectRepository.findAll());
         return "tests/new_test";
     }
 
@@ -72,7 +86,7 @@ public class TestController {
     }
 
     @GetMapping("/{id}/newQuestion")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String showNewTestQuestionForm(@PathVariable(value = "id")Long id, Model model,
                                           @AuthenticationPrincipal MyUserDetails myUserDetails){
         TestQuestion testQuestion = new TestQuestion();
@@ -100,7 +114,7 @@ public class TestController {
 
 
     @GetMapping("{id}/editQuestion/{questionId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String showUpdateQuestionForm(@PathVariable(value = "id")Long id,
                                          @PathVariable(value = "questionId") Long questionId,
                                          Model model){
@@ -123,7 +137,7 @@ public class TestController {
     }
 
     @GetMapping("{id}/deleteQuestion/{questionId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String deleteTestQuestion(@PathVariable(value = "id") Long id,
                                      @PathVariable(value = "questionId") Long questionId){
         testService.deleteByQuestionId(questionId);

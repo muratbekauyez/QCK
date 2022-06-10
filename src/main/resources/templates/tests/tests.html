@@ -101,12 +101,12 @@
 
         <a th:text="${test.subject.name}"></a><br>
 
-        <div class="row ml-3" style="margin-left:3px;" sec:authorize="hasAnyAuthority('ADMIN','TEACHER')">
+        <div class="row ml-3" style="margin-left:3px;" sec:authorize="hasAnyAuthority('ADMIN')">
             <a type="button" class="btn btn-default" th:href="@{/tests/edit/{id}(id = ${test.id})}">Edit</a>
         </div>
 
 
-        <div class="row ml-3" style="margin-left:3px;" sec:authorize="hasAnyAuthority('ADMIN','TEACHER')">
+        <div class="row ml-3" style="margin-left:3px;" sec:authorize="hasAnyAuthority('ADMIN')">
             <a type="button" class="btn btn-default" th:href="@{/tests/delete/{id}(id = ${test.id})}">Delete</a>
         </div>
         <br><br>

@@ -32,6 +32,9 @@ public class Test {
     )
     private List<TestQuestion> questionList;
 
+    @Column(name = "study_year")
+    private Integer studyYear;
+
     @Column(name = "enabled")
     private boolean enabled;
 

@@ -18,7 +18,6 @@ public class TestService {
     
     private final TestRepository testRepository;
     private final TestQuestionRepository testQuestionRepository;
-    private final SubjectRepository subjectRepository;
     private final QuestionOptionRepository optionRepository;
     private final UserRepository userRepository;
     private final StudentTestAttemptRepository studentTestAttemptRepository;
@@ -32,9 +31,11 @@ public class TestService {
         return testRepository.findTestsByEnabled(true);
     }
 
+    public List<Test> getAllEnabledTestsBySubject(List<Integer> studyYears){
+        return testRepository.findTestsByEnabledAndStudyYear(true, studyYears);
+    }
+
     public void saveTest(Test test){
-        //needs changes in future
-        test.setSubject(subjectRepository.getOne(1L));
         test.setEnabled(true);
         testRepository.save(test);
     }

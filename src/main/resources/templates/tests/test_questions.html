@@ -24,7 +24,7 @@
 <!--    Subject: <a th:text ="${testQuestion.learningObjective.subject.name}"></a>-->
 
     <br>
-    <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
+    <div sec:authorize="hasAnyAuthority('ADMIN')">
         <a th:href="@{/testQuestions/edit/{id}(id = ${testQuestion.id})}">Edit</a>
         <a th:href="@{/testQuestions/delete/{id}(id = ${testQuestion.id})}">Delete</a>
     </div>
