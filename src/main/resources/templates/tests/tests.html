@@ -101,7 +101,7 @@
 
         </div>
         <div class="pdf-bottom">
-            <div class="pdf-date" th:text="@{test.date}">
+            <div class="pdf-date" th:text="${#dates.format(test.date, 'dd-MM-yyyy HH:mm')}">
 
             </div>
             <div  sec:authorize="hasAnyAuthority('USER')">
