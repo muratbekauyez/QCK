@@ -64,9 +64,10 @@
         </div>
         <!-- Collapsible wrapper -->
         <!-- Avatar -->
+
         <div>
-            <a class="nav-link" href="analytic.html">
-                <img src="../../static/img/icon.svg" th:src=@{img/icon.svg} style="width:25px; height: 25px;" >
+            <a class="nav-link" th:href="@{/helperBlogs}">
+                <img th:src="@{img/icon.svg}" src="../../static/img/icon.svg" style="width:25px; height: 25px;" >
             </a>
         </div>
         <div class="dropdown m-3 mx-5 ">
@@ -78,7 +79,7 @@
                     data-mdb-toggle="dropdown"
                     aria-expanded="false"
             >
-                User
+                <span sec:authentication="name">Username</span>
             </a>
             <ul
                     class="dropdown-menu dropdown-menu-end "

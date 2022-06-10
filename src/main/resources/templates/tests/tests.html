@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
@@ -21,20 +22,20 @@
 
 <body style="background:linear-gradient(180deg, rgba(155, 217, 242, 0) 41.16%, rgba(255, 255, 255, 0.7) 100%), linear-gradient(237.67deg, rgba(155, 217, 242, 0) 30.62%, rgba(255, 215, 138, 0.33) 100%), linear-gradient(121.92deg, rgba(155, 217, 242, 0) 31.4%, rgba(255, 215, 138, 0.33) 100%), linear-gradient(115.18deg, rgba(186, 168, 230, 0.5) -35.29%, rgba(186, 168, 230, 0) 57.9%), linear-gradient(245.41deg, rgba(186, 168, 230, 0.55) -12.18%, rgba(155, 217, 242, 0) 56.8%), linear-gradient(0deg, rgba(226, 216, 250, 0.12), rgba(226, 216, 250, 0.12)), #BCD4F2;">
 
-<div class="col-md-10 mt-3 bg-light "
-     style="background-color:white; width: 1450px; height: 800px; margin-left: 30px; border-radius: 30px;">
+<div class="col-md-10 mt-3 bg-light " style="background-color:white; width: 1450px; height: 800px; margin-left: 30px; border-radius: 30px;">
 
     <!-- Navbar -->
     <nav class="rounded navbar navbar-expand-lg navbar-light bg-white" style="position: relative;">
         <!-- Container wrapper -->
         <div class="container-fluid" style="margin-left: 18px;">
             <!-- Toggle button -->
-            <button class="navbar-toggler"  type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
 
 
+            <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 bg-white">
                 <li class="nav-item mx-5">
                     <a class="nav-link" th:href="@{/}">Home</a>
@@ -57,14 +58,25 @@
         <!-- Collapsible wrapper -->
         <!-- Avatar -->
         <div>
-            <a class="nav-link" href="analytic.html"><img src="../../static/img/icon.svg" style="width:25px; height: 25px;"></a>
+            <a class="nav-link" th:href="@{/helperBlogs}">
+                <img th:src="@{img/icon.svg}" src="../../static/img/icon.svg" style="width:25px; height: 25px;" >
+            </a>
         </div>
         <div class="dropdown m-3 mx-5 ">
-            <a class="dropdown-toggle d-fcol-md-2 padding-0lex align-items-center hidden-arrow nav-link " href="#"
-               id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                User
+            <a
+                    class="dropdown-toggle d-fcol-md-2 padding-0lex align-items-center hidden-arrow nav-link "
+                    href="#"
+                    id="navbarDropdownMenuAvatar"
+                    role="button"
+                    data-mdb-toggle="dropdown"
+                    aria-expanded="false"
+            >
+                <span sec:authentication="name">Username</span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdownMenuAvatar">
+            <ul
+                    class="dropdown-menu dropdown-menu-end "
+                    aria-labelledby="navbarDropdownMenuAvatar"
+            >
                 <li>
                     <a class="dropdown-item " href="#">My profile</a>
                 </li>
@@ -77,40 +89,63 @@
             </ul>
         </div>
 
+        <!-- Right elements -->
+
+        <!-- Container wrapper -->
     </nav>
 
-    <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
-        <a type="button" class="btn btn-default" th:href="@{/tests/new}"> New Test</a><br>
+    <div class="pdf-item way way--active mt-3" style="width:1400px" th:each="test:${listTests}">
+        <div class="pdf-item-title" th:text="${test.name}">
+
+        </div>
+        <div class="pdf-bottom">
+            <div class="pdf-date">
+                26.05.2022
+            </div>
+            <div  sec:authorize="hasAnyAuthority('USER')">
+                <a class="pdf-btn"  th:href="@{/tests/takeExam/{id}(id = ${test.id})}">
+                    Start Test
+                </a>
+            </div>
+
+
+            <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
+                <a class="pdf-btn"  th:href="@{/tests/{id}(id = ${test.id})}">
+                    Look Through</a><br>
+            </div>
+
+            <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
+                <a class="pdf-btn" th:href="@{/tests/{id}/studentsAttempts(id = ${test.id})}">
+                    Students Attempts</a><br>
+                </a>
+            </div>
+
+            <a th:text="${test.subject.name}"></a><br>
+            <a class="row ml-3" style="margin-left: 100px" sec:authorize="hasAnyAuthority('ADMIN')">
+                <a type="button" class="btn btn-primary" th:href="@{/tests/edit/{id}(id = ${test.id})}">Edit</a>
+            </a>
+            <a class="row ml-3" style="margin-left:3px;" sec:authorize="hasAnyAuthority('ADMIN')">
+                <a type="button" class="btn btn-primary" th:href="@{/tests/delete/{id}(id = ${test.id})}">Delete</a>
+            </a>
+
+
+        </div>
+
+
+
+    </div>
+    <div class="row" style="margin-left:3px;">
+        <div class="col-xs-12" sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
+            <div class="text-">
+                <a th:href="@{/tests/new}" type="button" class="btn btn-default">
+                    <img src="../../static/img/plus_icon.svg" th:src="@{img/plus_icon.svg}">
+                </a>
+            </div>
+        </div>
     </div>
 
 
-    <div class="d-flex align-items-center pt-3" th:each="test:${listTests}">
-        <a class="pdf-item-title" th:text="${test.name}"></a><br>
-
-        <div sec:authorize="hasAnyAuthority('USER')">
-            <a class="pdf-btn-container" th:href="@{/tests/takeExam/{id}(id = ${test.id})}">Take Exam</a>
-        </div>
-        <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
-            <a class="pdf-btn-container"  th:href="@{/tests/{id}(id = ${test.id})}">
-                Look Through</a><br>
-        </div>
-        <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
-            <a class="pdf-btn-container" th:href="@{/tests/{id}/studentsAttempts(id = ${test.id})}">
-                Students Attempts</a><br>
-        </div>
-
-        <a th:text="${test.subject.name}"></a><br>
-
-        <div class="row ml-3" style="margin-left:3px;" sec:authorize="hasAnyAuthority('ADMIN')">
-            <a type="button" class="btn btn-default" th:href="@{/tests/edit/{id}(id = ${test.id})}">Edit</a>
-        </div>
-
-
-        <div class="row ml-3" style="margin-left:3px;" sec:authorize="hasAnyAuthority('ADMIN')">
-            <a type="button" class="btn btn-default" th:href="@{/tests/delete/{id}(id = ${test.id})}">Delete</a>
-        </div>
-        <br><br>
-    </div>
 </div>
+
 </body>
 </html>

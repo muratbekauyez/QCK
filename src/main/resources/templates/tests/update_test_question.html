@@ -26,10 +26,10 @@
     $(function () {
         $('input[name="type"]').click(function () {
             if (($("#multiple-button").not(":checked")) && ($("#open-button").not(":checked"))) {
-              $("#multiple").show();
-              $("#open").hide();
-              $("#multiple-answer").prop("disabled", false);
-              $("#open-answer").prop("disabled", true);
+                $("#multiple").show();
+                $("#open").hide();
+                $("#multiple-answer").prop("disabled", false);
+                $("#open-answer").prop("disabled", true);
             }
             if ($("#multiple-button").is(":checked")) {
                 $("#multiple").show();
@@ -46,48 +46,50 @@
     });
 </script>
 
-<body>
+<body style="background:#BCD4F2; ">
 
 
 <div class="card mt-3" style="margin-left: 500px;width: 500px">
-    <h1>Update Test Question</h1>
-    <form action="#" th:action="@{/tests/updateTestQuestion}" th:object="${testQuestion}" method="POST">
-        <input type="hidden" name="testId" th:value="${testId}">
-        <input type="hidden" name="questionId" th:value="*{id}">
-        <input type="radio" id="multiple-button" th:field="*{type}" value="MULTIPLE_CHOICE" name="type"> Multiple Choice
-        <input type="radio" id="open-button" th:field="*{type}" value="OPEN" name="type"> Open Choice <br>
+    <h1 style="margin-left: 90px">Update Test Question</h1>
+    <div class="mb-3">
+        <form style="margin-left: 80px"  action="#" th:action="@{/tests/updateTestQuestion}" th:object="${testQuestion}" method="POST">
+            <input type="hidden" name="testId" th:value="${testId}">
+            <input type="hidden" name="questionId" th:value="*{id}">
+            <input type="radio" id="multiple-button" th:field="*{type}" value="MULTIPLE_CHOICE" name="type"> Multiple Choice
+            <input type="radio" id="open-button" th:field="*{type}" value="OPEN" name="type"> Open Choice <br>
 
-        <input type="text" th:field="*{question}" placeholder="Question"/> <br>
+            <input type="text" th:field="*{question}" placeholder="Question"/> <br>
 
-        <div id="multiple" style="display: none">
-            <input type="text" th:field="*{questionOption.optionA}" placeholder="Option A"><br>
-            <input type="text" th:field="*{questionOption.optionB}" placeholder="Option B"><br>
-            <input type="text" th:field="*{questionOption.optionC}" placeholder="Option C"><br>
-            <input type="text" th:field="*{questionOption.optionD}" placeholder="Option D"><br>
+            <div id="multiple" style="display: none">
+                <input type="text" th:field="*{questionOption.optionA}" placeholder="Option A"><br>
+                <input type="text" th:field="*{questionOption.optionB}" placeholder="Option B"><br>
+                <input type="text" th:field="*{questionOption.optionC}" placeholder="Option C"><br>
+                <input type="text" th:field="*{questionOption.optionD}" placeholder="Option D"><br>
 
-            <select id="multiple-answer" th:field="*{correctAnswer}">
-                <option th:value="A" th:text="A"></option>
-                <option th:value="B" th:text="B"></option>
-                <option th:value="C" th:text="C"></option>
-                <option th:value="D" th:text="D"></option>
+                <select id="multiple-answer" th:field="*{correctAnswer}">
+                    <option th:value="A" th:text="A"></option>
+                    <option th:value="B" th:text="B"></option>
+                    <option th:value="C" th:text="C"></option>
+                    <option th:value="D" th:text="D"></option>
+                </select><br>
+            </div>
+
+            <div id="open" style="display:none;">
+                <input id="open-answer" type="text" th:field="*{correctAnswer}" placeholder="Correct Answer">
+            </div>
+
+            <select th:field="*{learningObjective}">
+                <option th:each="lobs : ${learningObjectivesBySubject}"
+                        th:value="${lobs.id}"
+                        th:text="${lobs.name}">
+                </option>
             </select><br>
-        </div>
-
-        <div id="open" style="display:none;">
-            <input id="open-answer" type="text" th:field="*{correctAnswer}" placeholder="Correct Answer">
-        </div>
-
-        <select th:field="*{learningObjective}">
-            <option th:each="lobs : ${learningObjectivesBySubject}"
-                    th:value="${lobs.id}"
-                    th:text="${lobs.name}">
-            </option>
-        </select><br>
 
 
-        <button type="submit">Update Test Question</button>
-    </form>
+            <button class="btn btn-primary" type="submit">Update Test Question</button>
+        </form>
 
+    </div>
 </div>
 
 </body>
