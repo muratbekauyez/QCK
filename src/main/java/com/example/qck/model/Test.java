@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -34,6 +35,9 @@ public class Test {
 
     @Column(name = "study_year")
     private Integer studyYear;
+
+    @Column(name = "date")
+    private Date date;
 
     @Column(name = "enabled")
     private boolean enabled;

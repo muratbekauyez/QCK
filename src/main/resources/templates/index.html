@@ -76,7 +76,9 @@
         <!-- Collapsible wrapper -->
         <!-- Avatar -->
         <div>
-            <a class="nav-link" th:href="@{/helperBlogs}"><img th:src="@{img/icon.svg}" src="../static/img/icon.svg" style="width:25px; height: 25px;" ></a>
+            <a class="nav-link" th:href="@{/helperBlogs}">
+                <img th:src="@{img/icon.svg}" src="../static/img/icon.svg" style="width:25px; height: 25px;" >
+            </a>
         </div>
         <div sec:authorize="isAnonymous()">
             <form action="/login" method="get">
@@ -84,31 +86,34 @@
             </form>
             <br>
         </div>
-        <div class="dropdown m-3 mx-5 ">
-            <a
-                    class="dropdown-toggle d-fcol-md-2 padding-0lex align-items-center hidden-arrow nav-link "
-                    href="#"
-                    id="navbarDropdownMenuAvatar"
-                    role="button"
-                    data-mdb-toggle="dropdown"
-                    aria-expanded="false"
-            >
-                <span sec:authentication="name">Username</span>
-            </a>
-            <ul
-                    class="dropdown-menu dropdown-menu-end "
-                    aria-labelledby="navbarDropdownMenuAvatar"
-            >
-                <li>
-                    <a class="dropdown-item" href="#">My profile</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#">Settings</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="/logout">Logout</a>
-                </li>
-            </ul>
+
+        <div sec:authorize="isAuthenticated()">
+            <div class="dropdown m-3 mx-5 ">
+                <a
+                        class="dropdown-toggle d-fcol-md-2 padding-0lex align-items-center hidden-arrow nav-link "
+                        href="#"
+                        id="navbarDropdownMenuAvatar"
+                        role="button"
+                        data-mdb-toggle="dropdown"
+                        aria-expanded="false"
+                >
+                    <span sec:authentication="name">Username</span>
+                </a>
+                <ul
+                        class="dropdown-menu dropdown-menu-end "
+                        aria-labelledby="navbarDropdownMenuAvatar"
+                >
+                    <li>
+                        <a class="dropdown-item" href="#">My profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <!-- Right elements -->
@@ -121,7 +126,8 @@
     <div sec:authorize="isAuthenticated()">
         Welcome <b><span sec:authentication="name">Username</span></b>
         &nbsp;
-        <i><span sec:authentication="principal.authorities">Roles</span></i></div>
+        <i><span sec:authentication="principal.authorities">Roles</span></i>
+    </div>
 
 
 
