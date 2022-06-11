@@ -43,28 +43,29 @@
         <!-- Left links -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 bg-white">
             <li class="nav-item mx-5">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" th:href="@{/}">Home</a>
             </li>
             <li class="nav-item mx-5">
-                <a class="nav-link" href="test.html">Тесты</a>
+                <a class="nav-link" th:href="@{/tests}">Тесты</a>
             </li>
             <li class="nav-item mx-5">
-                <a class="nav-link" href="announ.html">Объявления</a>
+                <a class="nav-link" th:href="@{/announcements}">Объявления</a>
             </li>
             <li class="nav-item mx-5">
-                <a class="nav-link" href="manual.html">Справочник</a>
+                <a class="nav-link" th:href="@{/manuals}">Справочник</a>
             </li>
             <li class="nav-item mx-5">
                 <a class="nav-link" href="analytic.html">Аналитика</a>
             </li>
-
         </ul>
         <!-- Left links -->
     </div>
     <!-- Collapsible wrapper -->
     <!-- Avatar -->
     <div>
-        <a class="nav-link" href="analytic.html"><img src="../../static/img/icon.svg" style="width:25px; height: 25px;" ></a>
+        <a class="nav-link" th:href="@{/helperBlogs}">
+            <img th:src="@{img/icon.svg}" src="../../static/img/icon.svg" style="width:25px; height: 25px;" >
+        </a>
     </div>
     <div class="dropdown m-3 mx-5 ">
         <a
