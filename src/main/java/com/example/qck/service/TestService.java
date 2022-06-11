@@ -22,6 +22,7 @@ public class TestService {
     private final UserRepository userRepository;
     private final StudentTestAttemptRepository studentTestAttemptRepository;
     private final StudentQuestionAttemptRepository studentQuestionAttemptRepository;
+    private final TeacherCheckRepository teacherCheckRepository;
 
     public List<Test> getAllTests(){
         return testRepository.findAll();
@@ -159,6 +160,17 @@ public class TestService {
 
     public List<StudentTestAttempt> allStudentTestAttemptsByTest(Long testId){
         return studentTestAttemptRepository.findAllByTestId(testId);
+    }
+
+    public List<TeacherCheck> allTestAttemptResults(Long testId){
+        List<TeacherCheck> results = new ArrayList<>();
+        List<StudentTestAttempt> studentTestAttempts = studentTestAttemptRepository.findAllByTestId(testId);
+        for(StudentTestAttempt testAttempt : studentTestAttempts){
+            TeacherCheck teacherCheck = teacherCheckRepository.getTeacherCheckByStudentTestAttemptId(testAttempt.getId());
+            if(teacherCheck != null) results.add(teacherCheck);
+        }
+
+        return results;
     }
 
     public StudentTestAttempt getStudentTestAttempt(Long attemptId){
