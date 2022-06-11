@@ -1,21 +1,126 @@
 <!DOCTYPE html>
+<html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Learning Objectives</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link type="text/css" th:rel="stylesheet" href="../../static/css/global.css" th:href="@{css/global.css}" >
+    <link type="text/css" th:rel="stylesheet" href="../../static/css/bootstrap.css" th:href="@{css/bootstrap.css}">
+    <link type="text/css" th:rel="stylesheet" href="../../static/css/global.css" th:href="@{css/global.css}" >
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css}" th:rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link type="text/css" th:rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css}"/>
+    <!-- Google Fonts -->
+    <link th:rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap}"/>
+    <!-- MDB -->
+    <link th:rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.css}"/>
+    <!-- MDB -->
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.js}"></script>
 </head>
-<body>
-<div sec:authorize="hasAnyAuthority('ADMIN')">
-    <a th:href="@{/learningObjectives/new}"> New Learning Objectives</a>
-</div>
 
-<div th:each="learningObjective:${listLearningObjectives}">
-    <h2 th:text ="${learningObjective.name}"></h2>
-    <h5 th:text ="${learningObjective.code}"></h5>
-    <h5 th:text ="${learningObjective.subject.name}"></h5>
-    <div sec:authorize="hasAnyAuthority('ADMIN')">
-        <a th:href="@{/learningObjectives/edit/{id}(id = ${learningObjective.id})}">Edit</a>
+<body style="background:linear-gradient(180deg, rgba(155, 217, 242, 0) 41.16%, rgba(255, 255, 255, 0.7) 100%), linear-gradient(237.67deg, rgba(155, 217, 242, 0) 30.62%, rgba(255, 215, 138, 0.33) 100%), linear-gradient(121.92deg, rgba(155, 217, 242, 0) 31.4%, rgba(255, 215, 138, 0.33) 100%), linear-gradient(115.18deg, rgba(186, 168, 230, 0.5) -35.29%, rgba(186, 168, 230, 0) 57.9%), linear-gradient(245.41deg, rgba(186, 168, 230, 0.55) -12.18%, rgba(155, 217, 242, 0) 56.8%), linear-gradient(0deg, rgba(226, 216, 250, 0.12), rgba(226, 216, 250, 0.12)), #BCD4F2;">
+
+<div class="col-md-10 mt-3 bg-light "
+     style="background-color:white; width: 1450px; height: 800px; margin-left: 30px; border-radius: 30px;">
+
+    <!-- Navbar -->
+    <nav class="rounded navbar navbar-expand-lg navbar-light bg-white" style="position: relative;">
+        <!-- Container wrapper -->
+        <div class="container-fluid" style="margin-left: 18px;">
+            <!-- Toggle button -->
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
+
+            </a>
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 bg-white">
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/tests}">Тесты</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/announcements}">Объявления</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/manuals}">Справочник</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" href="analytic.html">Аналитика</a>
+                </li>
+            </ul>
+
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+        <!-- Avatar -->
+        <div>
+            <a class="nav-link" th:href="@{/helperBlogs}">
+                <img th:src="@{img/icon.svg}" src="../../static/img/icon.svg" style="width:25px; height: 25px;" >
+            </a>
+        </div>
+        <div class="dropdown m-3 mx-5 ">
+            <a
+                    class="dropdown-toggle d-fcol-md-2 padding-0lex align-items-center hidden-arrow nav-link "
+                    href="#"
+                    id="navbarDropdownMenuAvatar"
+                    role="button"
+                    data-mdb-toggle="dropdown"
+                    aria-expanded="false">
+                User
+            </a>
+            <ul
+                    class="dropdown-menu dropdown-menu-end "
+                    aria-labelledby="navbarDropdownMenuAvatar"
+            >
+                <li>
+                    <a class="dropdown-item" href="#">My profile</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#">Settings</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right elements -->
+
+        <!-- Container wrapper -->
+    </nav>
+
+    <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')" class="mt-3 " style="margin-left: 10px">
+        <button type="button" class="btn btn-primary"><a th:href="@{/learningObjectives/new}"> New Learning Objectives</a></button>
+    </div>
+
+
+    <div class="pdf-item way way--active mt-3" style="width: 18rem;margin-left: 10px" th:each="learningObjective:${listLearningObjectives}">
+        <div  class="pdf-item-title">
+            <h2 class="card-item-title" th:text ="${learningObjective.name}"></h2>
+            <h6 class="pdf-content" th:text ="${learningObjective.code}"></h6>
+            <h5 class="pdf-content" th:text ="${learningObjective.subject.name}"></h5>
+            <div sec:authorize="hasAnyAuthority('ADMIN')">
+                <a class="card-link" th:href="@{/learningObjectives/edit/{id}(id = ${learningObjective.id})}">Edit</a>
+            </div>
+            <div sec:authorize="hasAnyAuthority('ADMIN')">
+                <a class="card-link" th:href="@{/learningObjectives/delete/{id}(id = ${learningObjective.id})}">Delete</a>
+            </div>
+        </div>
     </div>
 </div>
 </body>

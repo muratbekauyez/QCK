@@ -22,6 +22,12 @@ public class Announcement {
     @Column(name = "text")
     private String text;
 
+    @Column(name = "filename")
+    private String filename;
+
+    @Column(name = "content")
+    private byte[] content;
+
     @Column(name = "date")
     private Date date;
 }

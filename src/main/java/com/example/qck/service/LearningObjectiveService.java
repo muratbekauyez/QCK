@@ -18,7 +18,12 @@ public class LearningObjectiveService {
         return learningObjectiveRepository.findAll();
     }
 
+    public List<LearningObjective> getAllEnabledLearningObjectives(){
+        return learningObjectiveRepository.findLearningObjectiveByEnabled(true);
+    }
+
     public void saveLearningObjective(LearningObjective learningObjective){
+        learningObjective.setEnabled(true);
         learningObjectiveRepository.save(learningObjective);
     }
 
@@ -29,6 +34,13 @@ public class LearningObjectiveService {
     }
 
     public void updateLearningObjective(LearningObjective learningObjective){
+        learningObjective.setEnabled(true);
+        learningObjectiveRepository.save(learningObjective);
+    }
+
+    public void disableTest(Long id) {
+        LearningObjective learningObjective = getLearningObjectiveById(id);
+        learningObjective.setEnabled(false);
         learningObjectiveRepository.save(learningObjective);
     }
 }

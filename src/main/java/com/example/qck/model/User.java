@@ -1,6 +1,5 @@
 package com.example.qck.model;
 
-import com.example.qck.model.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +31,17 @@ public class User {
             inverseJoinColumns ={@JoinColumn(name = "role_id")}
     )
     private List<Role> roles;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "teachers_study_years",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<Integer> studyYears;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
 
 
 

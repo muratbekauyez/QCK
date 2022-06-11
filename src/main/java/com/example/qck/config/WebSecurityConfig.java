@@ -43,15 +43,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/tests/**").permitAll()
                 .antMatchers("/").permitAll()
 //                .antMatchers("/announcements/**").permitAll()
                 .antMatchers("/learningObjectives/**").permitAll()
                 .antMatchers("/testQuestions/**").permitAll()
-
-//                .antMatchers("/**/new").hasAuthority("ADMIN")
-//                .antMatchers("/**/edit/**").hasAuthority("ADMIN")
-//                .antMatchers("/**/delete/**").hasAuthority("ADMIN")
+                .antMatchers("/**/new").hasAuthority("ADMIN")
+                .antMatchers("/**/edit/**").hasAuthority("ADMIN")
+                .antMatchers("/**/delete/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

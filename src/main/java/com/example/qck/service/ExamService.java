@@ -65,11 +65,6 @@ public class ExamService {
         String headerValue = "attachment; filename=" + exam.getFilename();
         response.setHeader(headerKey, headerValue);
 
-
-        System.out.println(headerKey);
-        System.out.println(headerValue);
-        System.out.println(exam.getFilename());
-
         ServletOutputStream outputStream = response.getOutputStream();
         outputStream.write(exam.getContent());
         outputStream.close();

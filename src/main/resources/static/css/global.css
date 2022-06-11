@@ -1,0 +1,124 @@
+body{
+ background-color: black;
+}
+.row.no-pad {
+  margin-right:0;
+  margin-left:0;
+}
+.row.no-pad > [class*='col-'] {
+  padding-right:0;
+  padding-left:0;
+}
+.pdf-content.contnent-answer {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.pdf-list > div:nth-child(2n) {
+  transition-delay: 0.2s;
+}
+.pdf-list > div:nth-child(3n) {
+  transition-delay: 0.2s;
+}
+.pdf-item {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 7px;
+  background-color: white;
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+  border: 1px solid #d3d3d3;
+  opacity: 0;
+  transform: translateX(-60px);
+  overflow: hidden;
+  transition: transform 0.75s ease-in-out, opacity 0.75s ease-in-out;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.pdf-item.way--active {
+  transform: translate(0px);
+  opacity: 1;
+}
+.pdf-item.way--active1 {
+  transform: translate(0px);
+  opacity: 1;
+  height: 200px;
+}
+.pdf-item-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.pdf-content {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+.pdf-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pdf-btn-container {
+  display: flex;
+}
+.pdf-btn {
+  background: #0095B3;
+  border-radius: 15px;
+  z-index: 1;
+  border: none;
+  background-image: url(../img/small-wave.png);
+  -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  display: inline-flex;
+  margin-left: 20px;
+  min-height: 32px;
+  align-items: center;
+  padding: 0 20px;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+.pdf-btn:before {
+  background: #2bd5f7;
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: scaleX(0);
+  transform-origin: 50%;
+  transition-duration: .3s;
+  transition-property: transform;
+  transition-timing-function: ease-out;
+  webkit-transform: scaleX(0);
+  webkit-transform-origin: 50%;
+  webkit-transition-duration: .3s;
+  webkit-transition-property: transform;
+  webkit-transition-timing-function: ease-out;
+  z-index: -1;
+}
+.pdf-btn:hover:before {
+  transform: scaleX(1);
+  webkit-transform: scaleX(1);
+}
+.pdf-btn:hover {
+  color: #000;
+}
+.rectangle-1 {
+  background-color: var(--white);
+  border-radius: 20px;
+  box-shadow: 0px 3px 49px 9px 
+#0000000f;
+  height: 248px;
+  left: 710px;
+  position: absolute;
+  top: 916px;
+  width: 868px;
+}
+.delete{
+  height: 30px;
+  width: 25px;
+  position:relative ;
+  color: white;
+}

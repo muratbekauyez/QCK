@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.PreRemove;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,20 +18,33 @@ public class TestService {
     
     private final TestRepository testRepository;
     private final TestQuestionRepository testQuestionRepository;
-    private final SubjectRepository subjectRepository;
     private final QuestionOptionRepository optionRepository;
     private final UserRepository userRepository;
     private final StudentTestAttemptRepository studentTestAttemptRepository;
     private final StudentQuestionAttemptRepository studentQuestionAttemptRepository;
-    private final TeacherCheckRepository teacherCheckRepository;
 
     public List<Test> getAllTests(){
         return testRepository.findAll();
     }
 
+    public List<Test> getAllEnabledTest(){
+        return testRepository.findTestsByEnabled(true);
+    }
+
+    public List<Test> getAllEnabledTestsBySubject(User user){
+        List<Test> testsToReturn = new ArrayList<>();
+        List<Test> allUserAvailableTests = testRepository.findTestsByEnabledAndStudyYear(true, user.getStudyYears());
+        for(Test t : allUserAvailableTests){
+            Optional<StudentTestAttempt> attemptOptional = studentTestAttemptRepository.findStudentTestAttemptByTestIdAndUserId(t.getId(), user.getId());
+            if(attemptOptional.isEmpty()){
+                testsToReturn.add(t);
+            }
+        }
+
+        return testsToReturn;
+    }
+
     public void saveTest(Test test){
-        //needs changes in future
-        test.setSubject(subjectRepository.getOne(1L));
         test.setEnabled(true);
         testRepository.save(test);
     }
@@ -64,6 +76,18 @@ public class TestService {
         testQuestion = setNullQuestionOptionIfEmpty(testQuestion);
         testQuestionRepository.save(testQuestion);
 
+    }
+
+    public void updateTest(Test test){
+        Test old = getTestById(test.getId());
+        old.setName(test.getName());
+        testRepository.save(old);
+    }
+
+    public void disableTest(Long id){
+        Test test = getTestById(id);
+        test.setEnabled(false);
+        testRepository.save(test);
     }
 
     public TestQuestion getTestQuestionById(Long id){

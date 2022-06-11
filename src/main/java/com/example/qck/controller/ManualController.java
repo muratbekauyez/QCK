@@ -4,9 +4,16 @@ import com.example.qck.service.ManualService;
 import com.example.qck.model.Manual;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/manuals")
@@ -30,8 +37,8 @@ public class ManualController {
     }
 
     @PostMapping("/saveManual")
-    public String saveManual(@ModelAttribute("manual") Manual manual){
-        manualService.saveManual(manual);
+    public String saveManual(@RequestParam Map<String, String> requestParams, @RequestParam("content")MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
+        manualService.saveManual(requestParams, multipartFile, ra);
         return "redirect:/manuals";
     }
 
@@ -54,6 +61,16 @@ public class ManualController {
     public String delete(@PathVariable(value = "id")Long id){
         manualService.deleteById(id);
         return "redirect:/manuals";
+    }
+
+    @GetMapping("/download")
+    public void downloadFile(@Param("id")Long id, HttpServletResponse response) throws Exception {
+        manualService.downloadFile(id, response);
+    }
+
+    @GetMapping("/openFile")
+    public void openFile(@Param("id")Long id, HttpServletResponse response) throws Exception {
+        manualService.openFile(id, response);
     }
 
 
