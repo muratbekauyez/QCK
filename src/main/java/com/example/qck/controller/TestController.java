@@ -36,7 +36,7 @@ public class TestController {
             if(role.getId().equals(1L)){
                 model.addAttribute("listTests", testService.getAllEnabledTest());
             }else {
-                model.addAttribute("listTests", testService.getAllEnabledTestsBySubject(user.getStudyYears()));
+                model.addAttribute("listTests", testService.getAllEnabledTestsBySubject(user));
             }
             break;
         }

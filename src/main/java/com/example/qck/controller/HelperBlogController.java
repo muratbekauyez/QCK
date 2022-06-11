@@ -8,6 +8,7 @@ import com.example.qck.repository.UserRepository;
 import com.example.qck.service.HelperBlogService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +61,7 @@ public class HelperBlogController {
 
 
     @PostMapping("/replyToBlog")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String replyHelperBlog(@ModelAttribute("helperBlog") HelperBlog helperBlog,
                                  @AuthenticationPrincipal MyUserDetails userDetails){
 

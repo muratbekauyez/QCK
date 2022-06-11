@@ -35,8 +35,10 @@ public class AnnouncementService {
         Announcement announcement = new Announcement();
         announcement.setTitle(requestParams.get("title"));
         announcement.setText("text");
-        announcement.setFilename(filename);
-        announcement.setContent(multipartFile.getBytes());
+        if(!multipartFile.isEmpty()) {
+            announcement.setContent(multipartFile.getBytes());
+            announcement.setFilename(filename);
+        }
         announcement.setDate(new Date());
 
         ra.addFlashAttribute("message", "The file has been uploaded successfully.");

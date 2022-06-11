@@ -31,8 +31,17 @@ public class TestService {
         return testRepository.findTestsByEnabled(true);
     }
 
-    public List<Test> getAllEnabledTestsBySubject(List<Integer> studyYears){
-        return testRepository.findTestsByEnabledAndStudyYear(true, studyYears);
+    public List<Test> getAllEnabledTestsBySubject(User user){
+        List<Test> testsToReturn = new ArrayList<>();
+        List<Test> allUserAvailableTests = testRepository.findTestsByEnabledAndStudyYear(true, user.getStudyYears());
+        for(Test t : allUserAvailableTests){
+            Optional<StudentTestAttempt> attemptOptional = studentTestAttemptRepository.findStudentTestAttemptByTestIdAndUserId(t.getId(), user.getId());
+            if(attemptOptional.isEmpty()){
+                testsToReturn.add(t);
+            }
+        }
+
+        return testsToReturn;
     }
 
     public void saveTest(Test test){

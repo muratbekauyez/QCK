@@ -33,8 +33,10 @@ public class ManualService {
         Manual manual = new Manual();
         manual.setTitle(requestParams.get("title"));
         manual.setText("text");
-        manual.setFilename(filename);
-        manual.setContent(multipartFile.getBytes());
+        if(!multipartFile.isEmpty()) {
+            manual.setFilename(filename);
+            manual.setContent(multipartFile.getBytes());
+        }
         manual.setDate(new Date());
 
         ra.addFlashAttribute("message", "The file has been uploaded successfully.");
