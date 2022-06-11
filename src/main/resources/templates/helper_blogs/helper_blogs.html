@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Helper Blogs</title>
+</head>
+<body>
+
+<div sec:authorize="hasAnyAuthority('TEACHER', 'USER')">
+    <div class="container">
+        <form th:action="@{/helperBlogs/saveHelperBlog}" th:object="${helperBlog}" method="post">
+            <textarea th:field="*{comment}"></textarea> <br>
+
+            <button type="submit">Comment</button>
+        </form>
+    </div>
+
+
+    <div th:each="helperBlog : ${listHelperBlogs}">
+        <div>
+            <h6 th:text="${helperBlog.fromUser.username}" class="pdf-item-title"></h6>
+        </div>
+
+        <div>
+            <a th:text="${helperBlog.comment}" class="pdf-item-title"> </a>
+        </div>
+
+        <div>
+            <a th:text="${#dates.format(helperBlog.date, 'dd-MM-yyyy HH:mm')}" class="pdf-item-title"> </a>
+        </div>
+    </div>
+</div>
+
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+    <div th:each="helperBlog : ${distinctThreads}">
+        <div>
+            Thread: <a th:href="@{/helperBlogs/thread/{id}(id = ${helperBlog.threadId})}" th:text="${helperBlog.threadId}" class="pdf-item-title"></a>
+        </div>
+        <div>
+            From: <a  th:text="${helperBlog.fromUser.username}" class="pdf-item-title"></a>
+        </div>
+        <div>
+            To: <a  th:text="${helperBlog.toUser.username}" class="pdf-item-title"></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

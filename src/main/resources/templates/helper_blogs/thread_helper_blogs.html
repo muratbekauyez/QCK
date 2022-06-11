@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Helper Blogs</title>
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/helperBlogs/replyToBlog}" th:object="${helperBlog}" method="post">
+        <input type="hidden" name="threadId" th:value="${threadId}">
+        <textarea th:field="*{comment}"></textarea> <br>
+        <button type="submit">Comment</button>
+    </form>
+</div>
+
+
+<div th:each="helperBlog : ${threadHelperBlogs}">
+    <div>
+        <h6 th:text="${helperBlog.fromUser.username}" class="pdf-item-title"></h6>
+    </div>
+
+    <div>
+        <a th:text="${helperBlog.comment}" class="pdf-item-title"> </a>
+    </div>
+
+    <div>
+        <a th:text="${#dates.format(helperBlog.date, 'dd-MM-yyyy HH:mm')}" class="pdf-item-title"> </a>
+    </div>
+</div>
+</body>
+</html>

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "helper_blogs")
@@ -16,7 +18,6 @@ public class HelperBlog {
     private Long id;
 
     @Column(name = "thread_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long threadId;
 
     @Column(name = "comment")
@@ -29,4 +30,7 @@ public class HelperBlog {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_user_id")
     private User toUser;
+
+    @Column(name = "date")
+    private Date date;
 }
