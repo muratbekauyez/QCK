@@ -56,6 +56,10 @@ public class TestService {
         return test.get();
     }
 
+//    public List<Test> getTestBySubjectId(Long subjectId){
+//        List<Optional<Test>> tests = testRepository.findBy();
+//    }
+
     @Transactional
     public Test addTestQuestion(Long testId, TestQuestion testQuestion){
         testQuestion = setNullQuestionOptionIfEmpty(testQuestion);
