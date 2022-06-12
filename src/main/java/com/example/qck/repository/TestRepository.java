@@ -8,7 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface TestRepository extends JpaRepository<Test, Long> {
+    List<Test> findTestBySubject_Id(Long subjectId);
     List<Test> findTestsByEnabled(Boolean enabled);
 
     @Query( "SELECT t FROM Test t WHERE t.enabled=:enabled AND t.studyYear in :studyYears" )

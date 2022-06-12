@@ -4,3 +4,20 @@ services:
     hostname: web-1
     ports:
       - "8080:8080"
+    networks: ['mynetwork']
+
+  postgres:
+    image: postgres:latest
+    hostname: postgres
+    environment:
+      POSTGRES_DB: modo
+      POSTGRES_PASSWORD: qwerty
+    ports:
+      - "5432:5432"
+    networks: ['mynetwork']
+
+networks: {
+  mynetwork: {
+
+  }
+}
