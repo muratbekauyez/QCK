@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics</title>
+    <script th:inline="javascript">
+        window.onload = function() {
+            /*<![CDATA[*/
+            const los = /*[[${loList}]]*/ [];
+            const points = /*[[${analyticsMap}]]*/ {};
+            var dataPoints = [];
+            los.forEach(val =>{
+                let data = {
+                    type: /*[[${chartType}]]*/ "line",
+                    dataPoints: []
+                };
+                for(const [key, value] of Object.entries(points[val])){
+                    data.dataPoints.push({x: value, y:parseFloat(key)*100});
+                }
+                data.dataPoints.push({x: 1, y:100});
+                dataPoints.push(data);
+            });
+            console.log(dataPoints);
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "Hello world"
+                },
+                data: dataPoints,
+            });
+            chart.render();
+            /*]]>*/
+        }
+    </script>
+</head>
+<body>
+<h1>Analytics</h1>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</body>
+</html>
