@@ -58,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(permitted).permitAll()
+                .antMatchers("/signup/**").permitAll()
                 .antMatchers("/**/new").hasAuthority("ADMIN")
                 .antMatchers("/**/edit/**").hasAuthority("ADMIN")
                 .antMatchers("/**/delete/**").hasAuthority("ADMIN")
@@ -70,8 +71,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .permitAll();
-//                    .and()
-//                .exceptionHandling().accessDeniedPage("/error");
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/error");
     }
 }

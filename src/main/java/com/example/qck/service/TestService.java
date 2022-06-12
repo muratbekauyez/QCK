@@ -47,6 +47,7 @@ public class TestService {
 
     public void saveTest(Test test){
         test.setEnabled(true);
+        test.setDate(new Date());
         testRepository.save(test);
     }
 

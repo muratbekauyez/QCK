@@ -69,8 +69,8 @@
             </a>
         </div>
         <div sec:authorize="isAnonymous()">
-            <form action="/login" method="get">
-                <input type="submit" value="Login">
+            <form style="margin-right: 30px" action="/login" method="get">
+                <input style="margin-top: 10px" class="btn btn-primary" type="submit" value="Login">
             </form>
             <br>
         </div>
@@ -116,8 +116,6 @@
         &nbsp;
         <i><span sec:authentication="principal.authorities">Roles</span></i>
     </div>
-
-
 
 </div>
 

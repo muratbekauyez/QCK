@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "username")
@@ -43,6 +42,9 @@ public class User {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "school_id")
+    private School school;
 
 
 }
