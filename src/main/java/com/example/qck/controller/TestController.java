@@ -172,6 +172,14 @@ public class TestController {
         return "tests/students_attempts";
     }
 
+    @GetMapping("/{id}/results")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    public String allTestResults(@PathVariable("id") Long testId,
+                                     Model model){
+        model.addAttribute("results", testService.allTestAttemptResults(testId));
+        return "tests/test_results";
+    }
+
     @GetMapping("/studentAttempt/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public String studentAttempt(@PathVariable("id") Long attemptId,
