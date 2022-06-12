@@ -9,4 +9,6 @@ public interface LearningObjectiveRepository extends JpaRepository<LearningObjec
     List<LearningObjective> findAllBySubjectIdAndEnabled(Long subjectId, Boolean enabled);
 
     List<LearningObjective> findLearningObjectiveByEnabled(Boolean enabled);
+
+    List<LearningObjective> findAllBySubjectId(Long subject_id);
 }
