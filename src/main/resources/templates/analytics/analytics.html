@@ -3,29 +3,69 @@
       xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics</title>
+    <link type="text/css" th:rel="stylesheet" th:href="@{css/global.css}" >
+    <link type="text/css" th:rel="stylesheet" th:href="@{css/bootstrap.css}">
+    <link type="text/css" th:rel="stylesheet" th:href="@{css/global.css}" >
+    <link href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link type="text/css" th:rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css}"/>
+    <!-- Google Fonts -->
+    <link th:rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap}"/>
+    <!-- MDB -->
+    <link th:rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.css}"/>
+    <!-- MDB -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.js}"></script>
     <script th:inline="javascript">
         window.onload = function() {
             /*<![CDATA[*/
+            $("#getButton").on("click", function (){
+                let option = $("#chartType").val();
+                let subject = $("#subjects").val();
+                if ( subject!= null) {
+
+                    if (option != null)
+                        window.location.href = '/analytics?subject_id=' + subject + "&chartType=" + option;
+                    else window.location.href = '/analytics?subject_id=' + subject;
+                } else window.alert("Chose option");
+                // window.location.reload();
+            });
             const los = /*[[${loList}]]*/ [];
             const points = /*[[${analyticsMap}]]*/ {};
+            const subjectName = /*[[${subjectName}]]*/ "";
+            console.log(subjectName);
             var dataPoints = [];
             los.forEach(val =>{
                 let data = {
                     type: /*[[${chartType}]]*/ "line",
+                    showInLegend: true,
+                    name: "series-"+val,
+                    legendText: val,
                     dataPoints: []
                 };
+
                 for(const [key, value] of Object.entries(points[val])){
                     data.dataPoints.push({x: value, y:parseFloat(key)*100});
                 }
-                data.dataPoints.push({x: 1, y:100});
+
                 dataPoints.push(data);
             });
             console.log(dataPoints);
             var chart = new CanvasJS.Chart("chartContainer", {
                 title: {
-                    text: "Hello world"
+                    text: "Соотношение количества учеников к доле правильных ответов по учебным целям по предмету " + subjectName.name,
+                    fontSize: 20,
                 },
+                axisY:{
+                    title: "Доля правильных ответов %",
+                },
+                axisX:{
+                    interval: 1,
+                    title: "Количество учеников",
+                },
+                exportEnabled: true,
                 data: dataPoints,
             });
             chart.render();
@@ -33,10 +73,104 @@
         }
     </script>
 </head>
-<body>
-<h1>Analytics</h1>
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<body style="background:linear-gradient(180deg, rgba(155, 217, 242, 0) 41.16%, rgba(255, 255, 255, 0.7) 100%), linear-gradient(237.67deg, rgba(155, 217, 242, 0) 30.62%, rgba(255, 215, 138, 0.33) 100%), linear-gradient(121.92deg, rgba(155, 217, 242, 0) 31.4%, rgba(255, 215, 138, 0.33) 100%), linear-gradient(115.18deg, rgba(186, 168, 230, 0.5) -35.29%, rgba(186, 168, 230, 0) 57.9%), linear-gradient(245.41deg, rgba(186, 168, 230, 0.55) -12.18%, rgba(155, 217, 242, 0) 56.8%), linear-gradient(0deg, rgba(226, 216, 250, 0.12), rgba(226, 216, 250, 0.12)), #BCD4F2;">
+<div  class="col-md-10 mt-3 bg-light" style="background-color:white; width: 1450px; height: 800px; margin-left: 30px; border-radius: 30px;">
+<!-- Navbar -->
+    <nav class="rounded navbar navbar-expand-lg navbar-light bg-white" style="position: relative;">
+        <!-- Container wrapper -->
+        <div class="container-fluid" style="margin-left: 18px;">
+            <!-- Toggle button -->
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 bg-white">
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/tests}">Тесты</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/announcements}">Объявления</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/manuals}">Справочник</a>
+                </li>
+                <li class="nav-item mx-5">
+                    <a class="nav-link" th:href="@{/analytics}">Аналитика</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+        <!-- Avatar -->
+        <div>
+            <a class="nav-link" th:href="@{/helperBlogs}">
+                <img th:src="@{img/icon.svg}" src="../../static/img/icon.svg" style="width:25px; height: 25px;" >
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div class="dropdown m-3 mx-5 ">
+                <a
+                        class="dropdown-toggle d-fcol-md-2 padding-0lex align-items-center hidden-arrow nav-link "
+                        href="#"
+                        id="navbarDropdownMenuAvatar"
+                        role="button"
+                        data-mdb-toggle="dropdown"
+                        aria-expanded="false"
+                >
+                    <span sec:authentication="name">Username</span>
+                </a>
+                <ul
+                        class="dropdown-menu dropdown-menu-end "
+                        aria-labelledby="navbarDropdownMenuAvatar"
+                >
+                    <li>
+                        <a class="dropdown-item " href="#">My profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right elements -->
+
+        <!-- Container wrapper -->
+    </nav>
+    <div class="d-block w-25 ms-5 p-3">
+        <div class="">
+            <label for="subjects">Subject: </label>
+            <select name="subjects" id="subjects" class="form-select form-select-sm">
+                <option selected disabled>Выберите предмет</option>
+                <option th:each="subject:${subjects}" th:value="${subject.id}">
+                    <span th:text="${subject.name}"></span>
+                </option>
+            </select>
+        </div>
+
+        <div class="">
+            <label for="chartType">Тип графика: </label>
+            <select name="chartType" id="chartType" class="form-select form-select-sm">
+                <option value="scatter" selected><span>Точки</span></option>
+                <option value="line"><span>Линия</span></option>
+            </select>
+        </div>
+        <button id="getButton" type="button" class="btn btn-light btn-sm">Get</button>
+    </div>
+
+    <div id="chartContainer"  style="height: 370px; width: 80%;" class="mx-auto m-5"></div>
+</div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
 </body>
 </html>
