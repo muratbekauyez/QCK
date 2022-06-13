@@ -22,4 +22,15 @@ public interface StudentQuestionAttemptRepository extends JpaRepository<StudentQ
             "group by user_id", nativeQuery = true)
     List<Object[]> getAnalytics(@Param("learning_objective_id") Long learningObjectiveId);
 
+    //    @Query(value = "select \n" +
+//            "cast(count(CASE WHEN sqa.is_answer_correct THEN 1 END) as double precision) / cast(count(sqa.is_answer_correct) as double precision)\n" +
+//            "from student_test_attempts sta \n" +
+//            "inner join student_test_question_attempts stqa on sta.id=stqa.test_attempt_id\n" +
+//            "inner join student_question_attempts sqa on stqa.question_attempt_id=sqa.id\n" +
+//            "inner join test_questions as tq on sqa.question_id=tq.id\n" +
+//            "inner join taxonomy as tx on tx.level=lo.taxonomy_level\n" +
+//            "where tx.level=taxonomy_level\n"+
+//            "group by user_id", nativeQuery = true)
+//    List<Object[]> getAnalyticsbyTaxonomy(@Param("taxonomy_level") Long taxonomy_level);
+
 }

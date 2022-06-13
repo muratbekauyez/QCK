@@ -43,10 +43,19 @@ public class HelperBlogController {
 
     @PostMapping("/saveHelperBlog")
     public String saveHelperBlog(@ModelAttribute("helperBlog") HelperBlog helperBlog,
-                                 @AuthenticationPrincipal MyUserDetails userDetails){
+                                 @AuthenticationPrincipal MyUserDetails userDetails,
+                                 Model model){
         User user = userRepository.getUserByUsername(userDetails.getUsername());
+        for (Role role : user.getRoles()){
+            if(role.getId().equals(1L)){
+                model.addAttribute("distinctThreads", helperBlogService.getDistinctHeaderBlogsByThread());
+            }else {
+                model.addAttribute("listHelperBlogs", helperBlogService.getAllByUser(user.getId()));
+            }
+            break;
+        }
         helperBlogService.saveHelperBlog(user,helperBlog);
-        return "redirect:/";
+        return "redirect:/helperBlogs";
     }
 
     @GetMapping("/thread/{id}")
@@ -63,11 +72,20 @@ public class HelperBlogController {
     @PostMapping("/replyToBlog")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String replyHelperBlog(@ModelAttribute("helperBlog") HelperBlog helperBlog,
-                                 @AuthenticationPrincipal MyUserDetails userDetails){
+                                 @AuthenticationPrincipal MyUserDetails userDetails,
+                                  Model model){
 
         User user = userRepository.getUserByUsername(userDetails.getUsername());
+        for (Role role : user.getRoles()){
+            if(role.getId().equals(1L)){
+                model.addAttribute("distinctThreads", helperBlogService.getDistinctHeaderBlogsByThread());
+            }else {
+                model.addAttribute("listHelperBlogs", helperBlogService.getAllByUser(user.getId()));
+            }
+            break;
+        }
         helperBlogService.replyHelperBlog(user, helperBlog);
-        return "redirect:/";
+        return "redirect:/helperBlogs";
     }
 
 

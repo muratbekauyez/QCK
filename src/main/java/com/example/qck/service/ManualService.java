@@ -32,7 +32,7 @@ public class ManualService {
 
         Manual manual = new Manual();
         manual.setTitle(requestParams.get("title"));
-        manual.setText("text");
+        manual.setText(requestParams.get("text"));
         if(!multipartFile.isEmpty()) {
             manual.setFilename(filename);
             manual.setContent(multipartFile.getBytes());

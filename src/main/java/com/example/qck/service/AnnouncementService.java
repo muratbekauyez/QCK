@@ -34,7 +34,7 @@ public class AnnouncementService {
 
         Announcement announcement = new Announcement();
         announcement.setTitle(requestParams.get("title"));
-        announcement.setText("text");
+        announcement.setText(requestParams.get("text"));
         if(!multipartFile.isEmpty()) {
             announcement.setContent(multipartFile.getBytes());
             announcement.setFilename(filename);
