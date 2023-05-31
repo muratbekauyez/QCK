@@ -20,6 +20,6 @@ public interface HelperBlogRepository extends JpaRepository<HelperBlog, Long> {
 
     HelperBlog findFirstByThreadId(Long threadId);
 
-    @Query(value = "SELECT max (threadId) FROM HelperBlog ")
+    @Query(value = "SELECT coalesce(max(threadId), 0) FROM HelperBlog ")
     BigDecimal max();
 }

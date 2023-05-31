@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+
+    <head th:fragment="head">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Hugo 0.84.0">
+        <title> Diploma </title>
+    
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/"> 
+        <!-- Bootstrap core CSS -->
+        <link th:href="@{css/bootstrap/css/bootstrap.min.css}" th:rel="stylesheet">
+        
+        <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+            }
+        }
+        </style>
+        
+        
+        <!-- Custom styles for the page -->
+        <link th:href="@{css/sidebars.css}" th:rel="stylesheet">
+        <link th:href="@{css/style.css}" th:rel="stylesheet">
+
+        <script th:src="@{css//bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{js/sidebars.js}"></script>
+        <script th:src="@{js/jquery.min.js}"></script>
+        <script th:src="@{js/main.js}"></script>
+    </head>
+
+
+    <nav th:fragment="header" class="navbar navbar-expand-md navbar-light bg-white px-4 border-bottom">
+        <div class="container-fluid">
+        <svg class="bi me-2" width="25" height="25"><use xlink:href="#diploma-logo"/></svg>  
+        <a class="navbar-brand me-5" href="#">Diploma<strong>Project</strong></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse ms-5" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+                <a class="nav-link disabled" tabindex="-1" aria-disabled="true" th:if="${#request.getRequestURI().startsWith('/announcements')}">Announcements</a>
+                <a class="nav-link disabled" tabindex="-1" aria-disabled="true" th:if="${#request.getRequestURI().startsWith('/manuals')}">Manuals</a>
+                <a class="nav-link disabled" tabindex="-1" aria-disabled="true" th:if="${#request.getRequestURI().startsWith('/exams')}">Exams</a>
+                <a class="nav-link disabled" tabindex="-1" aria-disabled="true" th:if="${#request.getRequestURI().startsWith('/tests')}">Tests</a>
+                <a class="nav-link disabled" tabindex="-1" aria-disabled="true" th:if="${#request.getRequestURI().startsWith('/analytics')}">Analytics</a>
+                <a class="nav-link disabled" tabindex="-1" aria-disabled="true" th:if="${#request.getRequestURI().startsWith('/helperBlogs')}">Chat</a>
+            </li>
+            </ul>
+            
+            <div sec:authorize="hasAnyAuthority('ADMIN')">
+                <div th:if="${#request.getRequestURI().startsWith('/announcements')}">
+                    <a  class="btn btn-outline-primary me-2" th:href="@{announcements/new}" >New announcement</a>
+                </div>
+                <div th:if="${#request.getRequestURI().startsWith('/manuals')}">
+                    <a  class="btn btn-outline-primary me-2" th:href="@{manuals/new}">New manual</a>
+                </div>
+                <div th:if="${#request.getRequestURI().startsWith('/exams')}">
+                    <a  class="btn btn-outline-primary me-2" th:href="@{exams/new}">New exam</a>
+                </div>
+                <div th:if="${#request.getRequestURI().startsWith('/tests')}">
+                    <a  class="btn btn-outline-primary me-2" th:href="@{tests/new}">New test</a>
+                </div>
+            </div>
+            
+            <a class="btn btn-outline-primary me-2" th:href="@{/helperBlogs}">Chat</a>
+
+            <div sec:authorize="isAuthenticated()" class="dropdown">
+                <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <strong sec:authentication="name">username</strong>
+                </a>
+                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                    <li><a class="dropdown-item" href="#">New project...</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" th:href="@{/logout}">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </nav>
+
+    <div th:fragment="navbar" class="d-flex flex-column flex-shrink-0 p-3 bg-white min-vh-100" style="width: 280px;">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="templates/announcements/announcements.html" th:href="@{/announcements}" th:classappend="${#request.getRequestURI().startsWith('/announcements') ? 'active':''}" class="nav-link link-dark" aria-current="page">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home-list"/></svg>
+                Announcements
+                </a>
+            </li>
+            <li>
+                <a href="templates/tests/tests.html" th:href="@{/tests}" th:classappend="${#request.getRequestURI().startsWith('/tests') ? 'active':''}" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#tests-label"/></svg>
+                Tests
+                </a>
+            </li>
+            <li>
+                <a href="templates/analytics/analytics.html" th:href="@{/analytics}" th:classappend="${#request.getRequestURI().startsWith('/analytics') ? 'active':''}" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#analytics-chart"/></svg>
+                Analytics
+                </a>
+            </li>
+            <li>
+                <a href="templates/manuals/manuals.html" th:href="@{/manuals}" th:classappend="${#request.getRequestURI().startsWith('/manuals') ? 'active':''}" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#manuals-question"/></svg>
+                Manuals
+                </a>
+            </li>
+            <li>
+                <a href="templates/exams/exams.html" th:href="@{/exams}" th:classappend="${#request.getRequestURI().startsWith('/exams') ? 'active':''}" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#message-chat"/></svg>
+                Exams
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+</html>
