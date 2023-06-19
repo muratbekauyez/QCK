@@ -34,7 +34,7 @@ xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-e
     <link th:href="@{../../css/sidebars.css}" th:rel="stylesheet">
     <link th:href="@{../css/style.css}" th:rel="stylesheet">
 
-    <script th:src="@{../../css//bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{../../css/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{../../js/sidebars.js}"></script>
     <script th:src="@{../../js/jquery.min.js}"></script>
     <script th:src="@{../../js/main.js}"></script>
@@ -109,14 +109,17 @@ xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-e
                           </div>
                       </div>
                         
-                        <div class="container mt-2 me-4 p-4 h-100 visually-hidden" style="border-radius: 30px;" id="testQuestions">
+                        <div class="container mt-2 me-4 p-4 visually-hidden" style="border-radius: 30px;" id="testQuestions">
                             <div class="container text-xl-center">
                                 <h4 class="mt-2"><span th:text="${test.subject.name}"></span> <span th:text="${test.studyYear}"></span> grade</h4>
                             </div>
+                            <div class="container" sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">
+                              <a class="btn btn-primary" th:href="@{/tests/{id}/newQuestion(id = ${test.id})}">New Question</a>
+                            </div>
+
                             <div th:each="testQuestion : ${test.questionList}">
+                                <h5 class="mt-2" th:text="${testQuestion.question}"></h5>
                                 <div class="container-fluid w-50 bg-white rounded-3" th:if="${testQuestion.questionOption != null}">
-                                    <h5 class="mt-2" th:text="${testQuestion.question}"></h5>
-                                    
                                     <div class="form-check py-3 bg-transparent">
                                         <input class="btn-check" type="radio" disabled name="radio" id="defaultCheck1">
                                         <label class="btn btn-outline-primary rounded-circle" for="defaultCheck1"> A </label>

@@ -35,7 +35,7 @@
         <link th:href="@{../../css/sidebars.css}" th:rel="stylesheet">
         <link th:href="@{../css/style.css}" th:rel="stylesheet">
     
-        <script th:src="@{../../css//bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{../../css/bootstrap/js/bootstrap.min.js}"></script>
         <script th:src="@{../../js/sidebars.js}"></script>
         <script th:src="@{../../js/jquery.min.js}"></script>
         <script th:src="@{../../js/main.js}"></script>
@@ -89,6 +89,14 @@
         <div th:replace="fragments :: navbar" class="d-flex flex-column flex-shrink-0 p-3 bg-white min-vh-100" style="width: 280px;"></div>
 
         <div class="card mt-3" style="margin-left: 500px;width: 500px">
+          <div class="mb-3">
+            <h5 class="card-title" th:text="${studentAttempt.studentQuestionAttempts[0].id}"></h5>
+            <h5 class="card-title" th:text="${studentAttempt.user.username}"></h5>
+            <h6 class="card-subtitle mb-2 text-muted" th:text="${studentAttempt.test.name}"></h6>
+            <h6 class="card-subtitle mb-2 text-muted" th:text="${studentAttempt.test.subject.name}"></h6>
+            <h6 class="card-subtitle mb-2 text-muted" th:text="${studentAttempt.test.name}"></h6>
+            <h6 class="card-subtitle mb-2 text-muted" th:text="${studentAttempt.datePassed}"></h6>
+        </div>
             <div class="card mb-3">
                 <form action="#" th:action="@{/tests/checkTest}" th:object="${studentAttempt}" method="post">
                     <input type="hidden" th:field="${studentAttempt.id}" th:value="${studentAttempt.id}">

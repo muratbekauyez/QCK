@@ -60,7 +60,7 @@ xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-e
                         <p class="small" th:text="${#dates.format(testItem.date, 'dd-MM-yyyy HH:mm')}"></p>
                       </div>
                       <div class="container d-grid gap-2 d-md-flex justify-content-md-between">
-                        <div sec:authorize="hasAnyAuthority('USER')">
+                        <div sec:authorize="hasAnyAuthority('STUDENT', 'USER')">
                           <a th:href="@{/tests/takeExam/{id}(id = ${testItem.id})}" type="button" class="btn btn-outline-secondary btn-sm">Start test</a>
                         </div>
                         <div sec:authorize="hasAnyAuthority('ADMIN', 'TEACHER')">

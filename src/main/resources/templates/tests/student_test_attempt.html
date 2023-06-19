@@ -34,7 +34,7 @@ xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-e
     <link th:href="@{../../css/sidebars.css}" th:rel="stylesheet">
     <link th:href="@{../css/style.css}" th:rel="stylesheet">
 
-    <script th:src="@{../../css//bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{../../css/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{../../js/sidebars.js}"></script>
     <script th:src="@{../../js/jquery.min.js}"></script>
     <script th:src="@{../../js/main.js}"></script>
@@ -98,7 +98,7 @@ xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-e
                           </div>
                           <div class="row">
                               <div class="container col-md-4">
-                                  <img class="img-fluid float-start" alt='test/poster' src="../img/test_poster.png" style="border-radius: 50px;">
+                                  <img class="img-fluid float-start" alt='test/poster' src="../../img/test_poster.png" style="border-radius: 50px;">
                               </div>
                               <div class="container col mx-3">
                                   <h4>О чем будет тест ?</h4>
@@ -110,11 +110,14 @@ xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-e
                           </div>
                       </div>
                         
-                        <form class="container mt-2 me-4 p-4 visually-hidden" style="border-radius: 30px;" id="testQuestions">
+                        <form class="container mt-2 me-4 p-4 visually-hidden" style="border-radius: 30px;" id="testQuestions" th:action="@{/tests/passTest}" method="post">
+                            <input type="hidden" th:field="${test.id}" th:value="${test.id}">
                             <div class="container text-xl-center">
                                 <h4 class="mt-2"><span th:text="${test.subject.name}"></span> <span th:text="${test.studyYear}"></span> grade</h4>
                             </div>
-                            <div th:each="testQuestion : ${test.questionList}">
+                            <div th:each="testQuestion, status : ${test.questionList}">
+                                <input type="hidden" th:field="${test.questionList[__${status.index}__].id}" th:value="${test.questionList[__${status.index}__].id}">
+                                <input type="hidden" th:field="${test.questionList[__${status.index}__].type}" th:value="${test.questionList[__${status.index}__].type}"/>                  
                                 <h5 class="mt-2" th:text="${testQuestion.question}"></h5>
                                 <div class="container-fluid w-50 bg-white rounded-3" th:if="${testQuestion.questionOption != null}">
                                     
@@ -143,8 +146,10 @@ xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-e
                                     </div>
                                 </div>
                                 <div th:if= "*{testQuestion.questionOption == null}">
-                                    <input type = "text"  th:field="${test.questionList[__${status.index}__].studentAnswer}" placeholder="studentAnswer"/> <br>
+                                    <input type = "text"  th:field="${test.questionList[__${status.index}__].studentAnswer}" placeholder="studentAnswer"> 
+                                    <br>
                                 </div>
+                                <hr>
                             </div>
                             <button class="btn btn-primary"type="submit">Pass Test</button>
                         </form>
