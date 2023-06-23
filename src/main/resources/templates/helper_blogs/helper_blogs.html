@@ -74,7 +74,7 @@ xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-e
 
                     </div>
                 </div>
-                <form class="container pb-5" sec:authorize="hasAnyAuthority('TEACHER', 'STUDENT')" th:action="@{/helperBlogs/replyToBlog}" th:object="${helperBlog}" method="post">
+                <form class="container pb-5" sec:authorize="hasAnyAuthority('USER')" th:action="@{/helperBlogs/saveHelperBlog}" th:object="${helperBlog}" method="post">
                     <input type="hidden" name="threadId" th:value="${threadId}">
                     <div class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
